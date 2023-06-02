@@ -1,9 +1,9 @@
 import React from 'react'
 
-function MyAcount () {
+function MyAccount () {
   return (
     <div>MyAcount</div>
   )
 }
 
-export { MyAcount }
+export { MyAccount }

@@ -8,7 +8,7 @@ function Card ({ Category, title, price, images }) {
       <button className='z-1 absolute w-8 h-8 bg-gray-300 top-1 right-2 rounded-lg'>
         +
       </button>
-      <h2 className='z-1 absolute bottom-10 left-2 bg-gray-500  text-white'>
+      <h2 className='z-1 absolute bottom-40 left-2 bg-gray-500  text-white'>
         {Category}
       </h2>
       <div className='flex justify-around  text-sm absolute bottom-0  gap-10 bg-white py-2 widthPrice'>

@@ -1,8 +1,7 @@
-async function FetchAllProducts (route, page, nameCategory, idCategory) {
+async function FetchAllProducts (route, nameCategory) {
   const routes = {
-    home: `https://api.escuelajs.co/api/v1/products?offset=${page}&limit=12`,
-    category: `https://api.escuelajs.co/api/v1/categories/${idCategory}/products?offset=${page}&limit=12`,
-    electronics: ''
+    home: 'https://fakestoreapi.com/products',
+    category: `https://fakestoreapi.com/products/category/${nameCategory}`
   }
 
   const response = await fetch(

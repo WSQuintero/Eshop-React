@@ -6,7 +6,6 @@ function Electronics () {
     <ContainerProducts
       route={'electronics'}
       nameCategory={'electronics'}
-      idCategory={2}
     />
   )
 }

@@ -1,14 +1,13 @@
 import React from 'react'
 import { ContainerProducts } from '../../components/ContainerProducts/ContainerProducts'
 
-function Clothes () {
+function MensCLothing () {
   return (
     <ContainerProducts
-      route={'clothes'}
-      nameCategory={'clothes'}
-      idCategory={1}
+      route={"men's clothing"}
+      nameCategory={"men's clothing"}
     />
   )
 }
 
-export { Clothes }
+export { MensCLothing }

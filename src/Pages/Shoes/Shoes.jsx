@@ -1,10 +1,10 @@
 import React from 'react'
 import { ContainerProducts } from '../../components/ContainerProducts/ContainerProducts'
 
-function Home () {
+function Shoes () {
   return (
-    <ContainerProducts route={'home'}/>
+    <ContainerProducts route={'shoes'} nameCategory={'shoes'} idCategory={4} />
   )
 }
 
-export { Home }
+export { Shoes }

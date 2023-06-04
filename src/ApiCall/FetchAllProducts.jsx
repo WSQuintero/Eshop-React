@@ -3,12 +3,15 @@ async function FetchAllProducts (route, nameCategory) {
     home: 'https://fakestoreapi.com/products',
     category: `https://fakestoreapi.com/products/category/${nameCategory}`
   }
-
-  const response = await fetch(
-    route !== nameCategory ? routes[route] : routes.category
-  )
-  const responseJson = await response.json()
-  return responseJson
+  try {
+    const response = await fetch(
+      route !== nameCategory ? routes[route] : routes.category
+    )
+    const responseJson = await response.json()
+    return responseJson
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export { FetchAllProducts }

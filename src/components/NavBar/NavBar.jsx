@@ -8,6 +8,7 @@ function NavBar () {
   const activeStyle = 'underline underline-offset-4'
   const countProductStyle =
     'rounded-full w-5 h-5 border bg-gray-200 absolute -bottom-1 left-5 flex justify-center items-center place-content-center text-xs font-semibold text-gray-500'
+  const { isOpenCart, setIsOpenCart } = useContext(MyContext)
 
   return (
     <nav className='flex justify-between items-center h-20 top-0 w-full fixed bg-white z-10 p-6'>
@@ -83,7 +84,12 @@ function NavBar () {
             Sign out
           </NavLink>
         </li>
-        <button className='w-7 h-7 relative'>
+        <button
+          className='w-7 h-7 relative'
+          onClick={() => {
+            setIsOpenCart(!isOpenCart)
+          }}
+        >
           <AiOutlineShoppingCart />
           <span className={countProductStyle}>{addedProducts}</span>
         </button>

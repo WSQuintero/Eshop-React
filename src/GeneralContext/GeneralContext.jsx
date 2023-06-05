@@ -3,9 +3,9 @@ import React, { createContext, useState } from 'react'
 const MyContext = createContext()
 
 function GeneralContext ({ children }) {
-  const [page, setPage] = useState(0)
+  const [addedProducts, setAddedProducts] = useState(0)
   return (
-    <MyContext.Provider value={{ page, setPage }}>
+    <MyContext.Provider value={{ addedProducts, setAddedProducts }}>
       {children}
     </MyContext.Provider>
   )

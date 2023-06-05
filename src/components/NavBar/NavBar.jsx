@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
+import { AiOutlineShoppingCart } from 'react-icons/ai'
+import { MyContext } from '../../GeneralContext/GeneralContext'
 
 function NavBar () {
+  const { addedProducts } = useContext(MyContext)
   const activeStyle = 'underline underline-offset-4'
+  const countProductStyle =
+    'rounded-full w-5 h-5 border bg-gray-200 absolute -bottom-1 left-5 flex justify-center items-center place-content-center text-xs font-semibold text-gray-500'
 
   return (
-    <nav className='flex justify-between top-0 w-full'>
+    <nav className='flex justify-between items-center h-20 top-0 w-full fixed bg-white z-10 p-6'>
       <ul className='flex gap-3 items-center'>
         <li className='font-bold '>
           <NavLink to='/'>Shopi</NavLink>
@@ -78,6 +83,10 @@ function NavBar () {
             Sign out
           </NavLink>
         </li>
+        <button className='w-7 h-7 relative'>
+          <AiOutlineShoppingCart />
+          <span className={countProductStyle}>{addedProducts}</span>
+        </button>
       </ul>
     </nav>
   )

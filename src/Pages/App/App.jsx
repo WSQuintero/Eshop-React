@@ -4,13 +4,16 @@ import { AppRoutes } from '../../routes/AppRoutes/AppRoutes'
 import { NavBar } from '../../components/NavBar/NavBar'
 import { GeneralContext } from '../../GeneralContext/GeneralContext'
 import './App.css'
+import { IconContext } from 'react-icons'
 
 function App () {
   return (
     <GeneralContext>
       <BrowserRouter>
-        <NavBar />
-        <AppRoutes />
+        <IconContext.Provider value={{ className: 'w-7 h-7 ' }}>
+          <NavBar />
+          <AppRoutes />
+        </IconContext.Provider>
       </BrowserRouter>
     </GeneralContext>
   )

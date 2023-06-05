@@ -1,21 +1,23 @@
-import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import React, { useContext, useEffect } from 'react'
 import { AppRoutes } from '../../routes/AppRoutes/AppRoutes'
 import { NavBar } from '../../components/NavBar/NavBar'
-import { GeneralContext } from '../../GeneralContext/GeneralContext'
-import './App.css'
-import { IconContext } from 'react-icons'
+import { MyContext } from '../../GeneralContext/GeneralContext'
 
 function App () {
+  const { productsAdd } = useContext(MyContext)
+
+  useEffect(() => {
+    const productsAddJSON = JSON.stringify(productsAdd)
+    localStorage.setItem('productsAdd', productsAddJSON)
+  }, [productsAdd])
+
+  console.log(productsAdd)
+
   return (
-    <GeneralContext>
-      <BrowserRouter>
-        <IconContext.Provider value={{ className: 'w-7 h-7 ' }}>
-          <NavBar />
-          <AppRoutes />
-        </IconContext.Provider>
-      </BrowserRouter>
-    </GeneralContext>
+    <>
+      <NavBar />
+      <AppRoutes />
+    </>
   )
 }
 

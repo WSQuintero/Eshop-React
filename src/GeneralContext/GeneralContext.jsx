@@ -3,15 +3,14 @@ import React, { createContext, useState } from 'react'
 const MyContext = createContext()
 
 function GeneralContext ({ children }) {
-  const [addedProducts, setAddedProducts] = useState(0)
   const [isOpenCart, setIsOpenCart] = useState(false)
-  const [productsAdd, setProductsAdd] = useState([])
+  const [productsAdd, setProductsAdd] = useState(
+    JSON.parse(localStorage.getItem('productsAdd')) || []
+  )
 
   return (
     <MyContext.Provider
       value={{
-        addedProducts,
-        setAddedProducts,
         isOpenCart,
         setIsOpenCart,
         productsAdd,

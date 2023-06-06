@@ -12,7 +12,6 @@ function App () {
   }, [productsAdd])
 
   console.log(productsAdd)
-
   return (
     <>
       <NavBar />

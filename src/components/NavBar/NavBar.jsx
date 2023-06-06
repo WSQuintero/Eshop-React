@@ -4,7 +4,7 @@ import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { MyContext } from '../../GeneralContext/GeneralContext'
 
 function NavBar () {
-  const { addedProducts } = useContext(MyContext)
+  const { productsAdd } = useContext(MyContext)
   const activeStyle = 'underline underline-offset-4'
   const countProductStyle =
     'rounded-full w-5 h-5 border bg-gray-200 absolute -bottom-1 left-5 flex justify-center items-center place-content-center text-xs font-semibold text-gray-500'
@@ -91,7 +91,7 @@ function NavBar () {
           }}
         >
           <AiOutlineShoppingCart />
-          <span className={countProductStyle}>{addedProducts}</span>
+          <span className={countProductStyle}>{productsAdd.length}</span>
         </button>
       </ul>
     </nav>

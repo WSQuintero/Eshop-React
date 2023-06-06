@@ -5,8 +5,8 @@ export default {
     extend: {
       spacing: {
         'custom-size': '330px',
-        'width-price': '200px'
-
+        'width-price': '200px',
+        'size-img': '250px'
       }
     }
   },

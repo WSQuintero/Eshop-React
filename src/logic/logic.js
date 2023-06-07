@@ -5,9 +5,9 @@ function addOrDeleteProduct ({
   images,
   setProductsAdd,
   isInCart,
-  productsAdd
-}
-) {
+  productsAdd,
+  description
+}) {
   if (isInCart === -1) {
     setProductsAdd([
       ...productsAdd,
@@ -15,7 +15,8 @@ function addOrDeleteProduct ({
         images,
         Category,
         title,
-        price
+        price,
+        description
       }
     ])
   } else {

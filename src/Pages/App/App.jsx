@@ -11,7 +11,6 @@ function App () {
     localStorage.setItem('productsAdd', productsAddJSON)
   }, [productsAdd])
 
-  console.log(productsAdd)
   return (
     <>
       <NavBar />

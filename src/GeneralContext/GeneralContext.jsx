@@ -8,6 +8,7 @@ function GeneralContext ({ children }) {
     JSON.parse(localStorage.getItem('productsAdd')) || []
   )
   const [openProductDetail, setOpenProductDetail] = useState([false, {}])
+  const [isSell, setIsSell] = useState(false)
 
   return (
     <MyContext.Provider
@@ -17,7 +18,9 @@ function GeneralContext ({ children }) {
         productsAdd,
         setProductsAdd,
         openProductDetail,
-        setOpenProductDetail
+        setOpenProductDetail,
+        isSell,
+        setIsSell
       }}
     >
       {children}

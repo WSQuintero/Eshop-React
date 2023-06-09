@@ -8,10 +8,10 @@ import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <GeneralContext>
-    <BrowserRouter>
-      <IconContext.Provider value={{ className: 'w-7 h-7 ' }}>
+    <IconContext.Provider value={{ className: 'w-7 h-7 ' }}>
+      <BrowserRouter>
         <App />
-      </IconContext.Provider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </IconContext.Provider>
   </GeneralContext>
 )

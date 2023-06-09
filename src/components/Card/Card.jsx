@@ -5,7 +5,7 @@ import { GrAddCircle } from 'react-icons/gr'
 import { addOrDeleteProduct } from '../../logic/logic'
 
 function Card ({ Category, title, price, images, description }) {
-  const { productsAdd, setProductsAdd, setOpenProductDetail } =
+  const { productsAdd, setProductsAdd, setOpenProductDetail, setIsOpenCart } =
     useContext(MyContext)
 
   const isInCart = productsAdd.findIndex((product) => product.title === title)
@@ -20,6 +20,13 @@ function Card ({ Category, title, price, images, description }) {
     description
   }
 
+  const colorsCategory = {
+    "men's clothing": 'mensClothing',
+    electronics: 'electronics',
+    jewelery: 'jewelery',
+    "women's clothing": 'womensClothing'
+  }
+
   return (
     <article className='relative border border-gray-400  w-60 px-3 py-6 h-70 rounded-3xl bg-white flex-shrink-0 '>
       <img
@@ -31,18 +38,26 @@ function Card ({ Category, title, price, images, description }) {
             true,
             { Category, title, price, images, description }
           ])
+          setIsOpenCart(false)
         }}
       />
       <button
-        className='z-1 absolute w-10 h-10 bg-gray-400 -top-4 -right-3 rounded-lg grid  place-content-center'
+        className={`z-1 transition-all duration-2000 ease-in-out absolute w-10 h-10 bg-gray-400 -top-4 -right-3 rounded-lg grid place-content-center ${
+          isInCart === -1
+            ? 'hover:bg-green-400 hover:rounded-full hover:transform hover:rotate-180'
+            : 'hover:bg-red-400'
+        }`}
         onClick={() => {
           addOrDeleteProduct(necessaryInformation)
         }}
       >
         {isInCart !== -1 ? <MdDeleteForever /> : <GrAddCircle />}
       </button>
-      <h2 className='z-1 absolute -top-5 -left-5 bg-gray-200  text-gray-700 p-3 w-40 rounded-md h-11'>
-        {Category}
+      <h2
+        id={colorsCategory[Category]}
+        className='z-1 absolute -top-5 -left-5 bg-gray-200  text-gray-700 p-3 w-40 rounded-md h-11 font-bold'
+      >
+        {Category.charAt(0).toUpperCase() + Category.slice(1)}
       </h2>
       <div className='flex justify-around text-xs absolute bottom-0  gap-10 bg-gray-200 p-2 w-[237px] left-0 rounded-full h-[50px] overflow-hidden place-content-center items-center'>
         <h3 className=''> {title.substring(0, 17)}</h3>

@@ -10,6 +10,7 @@ import { MensCLothing } from "../../Pages/Men'sClothing/Men'sClothing"
 import { Electronics } from '../../Pages/Electronics/Electronics'
 import { Jewelery } from '../../Pages/Jewelery/Jewelery'
 import { WomensClothing } from '../../Pages/WomensClothing/WomensClothing'
+import { Invoice } from '../../Pages/Invoice/Invoice'
 
 function AppRoutes () {
   const routes = useRoutes([
@@ -22,7 +23,9 @@ function AppRoutes () {
     { path: '/my-order', element: <MyOrder /> },
     { path: '/my-orders', element: <MyOrders /> },
     { path: '*', element: <NotFound /> },
-    { path: '/sign-in', element: <SignIn /> }
+    { path: '/sign-in', element: <SignIn /> },
+    { path: '/invoice', element: <Invoice/> }
+
   ])
   return routes
 }

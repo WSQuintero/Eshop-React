@@ -19,8 +19,16 @@ function Invoice () {
     ...orders,
     {
       order: [...productsAdd],
-      date: new Date().toLocaleDateString(),
-      time: new Date().toLocaleTimeString()
+      date: new Date().toLocaleDateString('es-ES', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric'
+      }),
+      time: new Date().toLocaleTimeString([], {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+      })
     }
   ]
 
@@ -75,10 +83,16 @@ function Invoice () {
         </>
       )}
       {isSell && (
-        <div className='mt-20 h-[90%] flex items-center'>
-          <h2 className='font-bold text-[25px] text-green-600'>
+        <div className='mt-20 h-[90%] flex flex-col gap-2 items-center '>
+          <img
+            src='https://i.pinimg.com/originals/7f/cf/a1/7fcfa1896b7b1d59c72742922ba816aa.png'
+            width={500}
+            alt=''
+          />
+          <h2 className='font-bold text-[25px] text-green-600 absolute bottom-20'>
             Tu compra ha sido completada
           </h2>
+
           <Confetti width={window.innerWidth} height={window.innerHeight} />
         </div>
       )}

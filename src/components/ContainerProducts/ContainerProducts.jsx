@@ -1,32 +1,67 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Card } from '../Card/Card'
 import { useCallApi } from '../../customHooks/useCallApi'
 import { ProductDetail } from '../ProductDetail/ProductDetail'
 import { MyContext } from '../../GeneralContext/GeneralContext'
 
-function ContainerProducts ({ route, nameCategory, idCategory }) {
-  const { dataProducts } = useCallApi(route, nameCategory, idCategory)
+function ContainerProducts ({ route, nameCategory, sort }) {
+  const { dataProducts } = useCallApi(route, nameCategory, sort)
   const { openProductDetail } = useContext(MyContext)
+  const [isCharged, setIsCharged] = useState(false)
+
+  const temporal = Array(5).fill('*')
+  console.log(temporal)
+  useEffect(() => {
+    setIsCharged(true)
+    console.log(isCharged)
+  }, [dataProducts])
 
   return (
     <>
-      <section
-        className={`flex flex-wrap w-auto justify-around p-20 gap-10  relative overflow-hidden mt-10 z-0 ${
-          openProductDetail[0] ? 'blur-md' : 'blur-none'
-        }`}
-      >
-        {dataProducts?.map((product) => (
-          <Card
-            key={product.title + product.category}
-            Category={product.category}
-            title={product.title}
-            price={product.price}
-            images={product.image}
-            description={product.description}
-          />
-        ))}
-      </section>
-      <section>{openProductDetail[0] && <ProductDetail />}</section>
+      {isCharged
+        ? (
+        <>
+          <section
+            className={`flex flex-wrap  justify-around  items-start gap-10  relative  z-0 w-full mt-40 ${
+              openProductDetail[0] ? 'blur-md' : 'blur-none'
+            }`}
+          >
+            {dataProducts?.map((product) => (
+              <Card
+                key={product.title + product.category}
+                Category={product.category}
+                title={product.title}
+                price={product.price}
+                images={product.image}
+                description={product.description}
+                isCharged={isCharged}
+              />
+            ))}
+          </section>
+          <section>{openProductDetail[0] && <ProductDetail />}</section>
+        </>
+          )
+        : (
+        <>
+          <section
+            className={`flex flex-wrap  justify-around  items-start gap-10  relative  z-0 w-full mt-40 ${
+              openProductDetail[0] ? 'blur-md' : 'blur-none'
+            }`}
+          >
+            {temporal?.map((product, index) => (
+              <Card
+                key={index}
+                Category={'product.category'}
+                title={'product.title'}
+                price={'$500'}
+                images='https://interaxiona.com/wp-content/uploads/2018/08/cargando-loading-043.gif'
+                description={'product.description'}
+                isCharged={isCharged}
+              />
+            ))}
+          </section>
+        </>
+          )}
     </>
   )
 }

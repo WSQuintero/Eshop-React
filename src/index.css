@@ -1,7 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap");
 
 body {
   display: flex;
@@ -47,7 +47,10 @@ section div img:hover {
   background-color: rgb(158, 158, 253, 0.3);
   color: rgb(58, 58, 124);
 }
-
+#mensClothing-hover:hover{
+   background-color: rgb(158, 158, 253);
+  color: white;
+}
 #electronics {
   background-color: rgb(240, 189, 114);
   color: white;
@@ -56,6 +59,10 @@ section div img:hover {
   background-color: rgb(240, 189, 114, 0.3);
   color: rgb(138, 105, 56);
 }
+#electronics-hover:hover{
+  background-color: rgb(240, 189, 114);
+  color: white;
+}
 #jewelery {
   background-color: rgb(90, 197, 192);
   color: white;
@@ -63,6 +70,10 @@ section div img:hover {
 #jewelery-opacity {
   background-color: rgb(174, 255, 251, 0.3);
   color: rgb(50, 122, 119);
+}
+#jewelery-hover:hover {
+  background-color: rgb(90, 197, 192);
+  color: white;
 }
 #womensClothing {
   background-color: rgb(220, 159, 255);
@@ -73,3 +84,7 @@ section div img:hover {
   background-color: rgb(220, 159, 255, 0.2);
   color: rgb(112, 56, 145);
 }
+#womensClothing-hover:hover{
+   background-color: rgb(220, 159, 255);
+  color: white;
+} 

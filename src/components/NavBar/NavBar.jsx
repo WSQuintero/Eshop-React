@@ -1,102 +1,213 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { MyContext } from '../../GeneralContext/GeneralContext'
+import { GiHamburgerMenu } from 'react-icons/gi'
+import { IconContext } from 'react-icons'
 
 function NavBar () {
-  const { productsAdd } = useContext(MyContext)
+  const {
+    productsAdd,
+    setOptionSelected,
+    isOpenBurguerMenu,
+    setIsOpenBurguerMenu
+  } = useContext(MyContext)
   const activeStyle = 'underline underline-offset-4'
-  const countProductStyle =
-    'rounded-full w-5 h-5 border bg-gray-200 absolute -bottom-1 left-5 flex justify-center items-center place-content-center text-xs font-semibold text-gray-500'
   const { isOpenCart, setIsOpenCart } = useContext(MyContext)
-  const borderLi = 'border-l border-gray-500 text-center px-2'
+  const navStyle = isOpenBurguerMenu
+    ? 'flex flex-col w-full lg:flex-row items-center text-lg lg:text-sm '
+    : 'flex w-full justify-between items-center'
+  const containerButtonStyle = isOpenBurguerMenu
+    ? 'flex  lg:flex-row gap-10 px-4 lg:bg-gray-600 bg-white text-gray-600 lg:text-gray-200 lg:w-auto text-4xl lg:text-sm justify-between p-4 mb-10 lg:mb-0 items-center relative w-[100%] top-o'
+    : 'flex w-[90%] justify-between items-center'
+  const containerLinks = isOpenBurguerMenu
+    ? 'lg:flex lg:flex-row lg:justify-between flex flex-col w-[100%] justify-center gap-10'
+    : ''
+  const containerUl = isOpenBurguerMenu
+    ? 'lg:flex lg:flex-row gap-3 flex flex-col items-center text-start mb-10 lg:mb-0'
+    : ''
+  const countProductStyle =
+    `rounded-full w-5 h-5 border bg-gray-200 absolute -bottom-1 left-5 flex justify-center items-center place-content-center text-xl font-bold text-gray-500 text-center pb-1 
+     ${isOpenBurguerMenu && window.innerWidth < 1015
+      ? 'left-10 bottom-1 absolute w-[30px] h-[30px]'
+      : false}`
+  const handleResize = () => {
+    const windowWidth = window.innerWidth
+    setIsOpenBurguerMenu(windowWidth >= 1015)
+  }
+  window.addEventListener('resize', handleResize)
+  useEffect(() => {
+    handleResize()
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
 
   return (
-    <nav className='flex justify-between items-center h-[100%] top-0 w-[100%]  '>
-      <ul className='flex items-center'>
-        <li className={'font-bold px-3'}>
-          <NavLink to='/'>Shopi</NavLink>
-        </li>
-        <li className={borderLi + ' hover:bg-gray-300'}>
-          <NavLink
-            to={'/'}
-            className={({ isActive }) => (isActive ? activeStyle : undefined)}
-          >
-            All
-          </NavLink>
-        </li>
-        <li className={`${borderLi} hover:bg-mens hover:text-white`}>
-          <NavLink
-            to={"/men'sClothing"}
-            className={({ isActive }) => (isActive ? activeStyle : undefined)}
-          >
-            {"Men's clothing"}
-          </NavLink>
-        </li>
-        <li className={`${borderLi} hover:bg-electronics hover:text-white`}>
-          <NavLink
-            to={'/electronics'}
-            className={({ isActive }) => (isActive ? activeStyle : undefined)}
-          >
-            Electronics
-          </NavLink>
-        </li>
-        <li className={`${borderLi} hover:bg-jewelry hover:text-white`}>
-          <NavLink
-            to={'/jewelery'}
-            className={({ isActive }) => (isActive ? activeStyle : undefined)}
-          >
-            Jewelery
-          </NavLink>
-        </li>
-        <li className={`${borderLi} hover:bg-women hover:text-white`}>
-          <NavLink
-            to={"/women's-clothing"}
-            className={({ isActive }) => (isActive ? activeStyle : undefined)}
-          >
-            {"Women's clothing"}
-          </NavLink>
-        </li>
-      </ul>
-      <ul className='flex gap-3 items-center '>
-        <li className='text-black/60 border-l border-gray-500 text-center px-2'>
-          santiago@gmail.com
-        </li>
-        <li className={borderLi}>
-          <NavLink
-            to={'/my-orders'}
-            className={({ isActive }) => (isActive ? activeStyle : undefined)}
-          >
-            My Orders
-          </NavLink>
-        </li>
-        <li className={borderLi}>
-          <NavLink
-            to={'/my-account'}
-            className={({ isActive }) => (isActive ? activeStyle : undefined)}
-          >
-            My Account{' '}
-          </NavLink>
-        </li>
-        <li className={borderLi}>
-          <NavLink
-            to={'sign-out'}
-            className={({ isActive }) => (isActive ? activeStyle : undefined)}
-          >
-            {' '}
-            Sign out
-          </NavLink>
-        </li>
-        <button
-          className='w-7 h-7 relative border-l border-gray-500 text-center px-1'
+    <nav className={navStyle}>
+      <div className={containerButtonStyle}>
+        <span
           onClick={() => {
-            setIsOpenCart(!isOpenCart)
+            setIsOpenBurguerMenu(false)
+            handleResize()
           }}
         >
-          <AiOutlineShoppingCart />
-          <span className={countProductStyle}>{productsAdd.length}</span>
+          <NavLink to='/' onClick={() => setOptionSelected('asc')}>
+            Shopi
+          </NavLink>
+        </span>
+        <button
+          className='lg:hidden'
+          onClick={() => {
+            setIsOpenBurguerMenu(!isOpenBurguerMenu)
+          }}
+        >
+          <GiHamburgerMenu />
         </button>
-      </ul>
+      </div>
+      <div className={containerLinks}>
+        {isOpenBurguerMenu && (
+          <>
+            <ul className={containerUl}>
+              <li>
+                <NavLink
+                  onClick={() => {
+                    setOptionSelected('asc')
+                    setIsOpenBurguerMenu(false)
+                    handleResize()
+                  }}
+                  to={'/'}
+                  className={({ isActive }) =>
+                    isActive ? activeStyle : undefined
+                  }
+                >
+                  All
+                </NavLink>
+              </li>
+              <li id='mensClothing-hover'>
+                <NavLink
+                  to={"/men'sClothing"}
+                  className={({ isActive }) =>
+                    isActive ? activeStyle : undefined
+                  }
+                  onClick={() => {
+                    setIsOpenBurguerMenu(false)
+                    handleResize()
+                  }}
+                >
+                  {"Men's clothing"}
+                </NavLink>
+              </li>
+              <li id='electronics-hover'>
+                <NavLink
+                  to={'/electronics'}
+                  className={({ isActive }) =>
+                    isActive ? activeStyle : undefined
+                  }
+                  onClick={() => {
+                    setIsOpenBurguerMenu(false)
+                    handleResize()
+                  }}
+                >
+                  Electronics
+                </NavLink>
+              </li>
+              <li id='jewelery-hover'>
+                <NavLink
+                  to={'/jewelery'}
+                  className={({ isActive }) =>
+                    isActive ? activeStyle : undefined
+                  }
+                  onClick={() => {
+                    setIsOpenBurguerMenu(false)
+                    handleResize()
+                  }}
+                >
+                  Jewelery
+                </NavLink>
+              </li>
+              <li id='womensClothing-hover'>
+                <NavLink
+                  to={"/women's-clothing"}
+                  className={({ isActive }) =>
+                    isActive ? activeStyle : undefined
+                  }
+                  onClick={() => {
+                    setIsOpenBurguerMenu(false)
+                    handleResize()
+                  }}
+                >
+                  {"Women's clothing"}
+                </NavLink>
+              </li>
+            </ul>
+            <ul className={containerUl}>
+              <li>santiago@gmail.com</li>
+              <li>
+                <NavLink
+                  to={'/my-orders'}
+                  className={({ isActive }) =>
+                    isActive ? activeStyle : undefined
+                  }
+                  onClick={() => {
+                    setIsOpenBurguerMenu(false)
+                    handleResize()
+                  }}
+                >
+                  My Orders
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to={'/my-account'}
+                  className={({ isActive }) =>
+                    isActive ? activeStyle : undefined
+                  }
+                  onClick={() => {
+                    setIsOpenBurguerMenu(false)
+                    handleResize()
+                  }}
+                >
+                  My Account{' '}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to={'sign-out'}
+                  className={({ isActive }) =>
+                    isActive ? activeStyle : undefined
+                  }
+                  onClick={() => {
+                    setIsOpenBurguerMenu(false)
+                    handleResize()
+                  }}
+                >
+                  {' '}
+                  Sign out
+                </NavLink>
+              </li>
+            </ul>
+          </>
+        )}
+      </div>
+      <button
+        onClick={() => {
+          setIsOpenCart(!isOpenCart)
+          setIsOpenBurguerMenu(false)
+          handleResize()
+        }}
+        className={`relative flex items-center justify-center ml-4 mr-2  ${
+          isOpenBurguerMenu
+            ? 'w-[50px] h-[70px] md:w-[30px] md:h-[30px] text-2xl'
+            : 'w-[30px] h-[30px] '
+        }`}
+      >
+        <IconContext.Provider value={{ className: 'shared-class', size: isOpenBurguerMenu && window.innerWidth < 1015 ? 50 : window.innerWidth >= 1015 ? 30 : 30 }}>
+          <AiOutlineShoppingCart />
+        </IconContext.Provider>
+        <span className={countProductStyle}>{productsAdd.length}</span>
+      </button>
     </nav>
   )
 }

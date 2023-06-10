@@ -13,6 +13,8 @@ function GeneralContext ({ children }) {
     JSON.parse(localStorage.getItem('orders')) || []
   )
   const [reviewOrder, setReviewOrder] = useState()
+  const [optionSelected, setOptionSelected] = useState('asc')
+  const [isOpenBurguerMenu, setIsOpenBurguerMenu] = useState(false)
 
   const addToLocalStorage = (toAdd, nameToAdd) => {
     const toAddAddJSON = JSON.stringify(toAdd)
@@ -60,6 +62,7 @@ function GeneralContext ({ children }) {
       setOrders(duplicatedOrders)
     }
   }
+
   return (
     <MyContext.Provider
       value={{
@@ -77,7 +80,11 @@ function GeneralContext ({ children }) {
         addToLocalStorage,
         addOrDeleteProduct,
         reviewOrder,
-        setReviewOrder
+        setReviewOrder,
+        optionSelected,
+        setOptionSelected,
+        isOpenBurguerMenu,
+        setIsOpenBurguerMenu
       }}
     >
       {children}

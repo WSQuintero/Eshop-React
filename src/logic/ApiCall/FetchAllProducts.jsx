@@ -1,6 +1,6 @@
-async function FetchAllProducts (route, nameCategory) {
+async function FetchAllProducts (route, nameCategory, sort = 'desc') {
   const routes = {
-    home: 'https://fakestoreapi.com/products',
+    home: `https://fakestoreapi.com/products?sort=${sort}`,
     category: `https://fakestoreapi.com/products/category/${nameCategory}`
   }
   try {

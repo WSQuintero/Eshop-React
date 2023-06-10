@@ -4,7 +4,7 @@ import { MdDeleteForever } from 'react-icons/md'
 import { GrAddCircle } from 'react-icons/gr'
 import { useNavigate } from 'react-router-dom'
 
-function Card ({ Category, title, price, images, description }) {
+function Card ({ Category, title, price, images, description, isCharged }) {
   const {
     productsAdd,
     setProductsAdd,

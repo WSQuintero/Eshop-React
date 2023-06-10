@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { FetchAllProducts } from '../ApiCall/FetchAllProducts'
+import { FetchAllProducts } from '../logic/ApiCall/FetchAllProducts'
 
 function useCallApi (route, nameCategory) {
   const [dataProducts, setDataProducts] = useState([])

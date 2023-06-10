@@ -50,7 +50,7 @@ function CartProducts () {
             <strong>Total a pagar: </strong>
             {totalPrice.toFixed(2)}
           </span>
-          <button onClick={() => { history('/invoice'); setIsSell(false); setIsOpenCart(!isOpenCart) }} className='w-auto h-10 border border-gray-400 rounded-full  p-5 flex justify-center items-center bg-white text-gray-800 font-bold'>
+          <button onClick={() => { history('/invoice'); setIsSell(false); setIsOpenCart(!isOpenCart) }} className='w-auto h-10 border border-gray-400 rounded-lg  p-5 flex justify-center items-center bg-white text-gray-800 font-bold'>
             Ir a pagar
           </button>
         </>

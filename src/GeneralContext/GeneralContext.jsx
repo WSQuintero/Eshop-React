@@ -9,7 +9,57 @@ function GeneralContext ({ children }) {
   )
   const [openProductDetail, setOpenProductDetail] = useState([false, {}])
   const [isSell, setIsSell] = useState(false)
+  const [orders, setOrders] = useState(
+    JSON.parse(localStorage.getItem('orders')) || []
+  )
+  const [reviewOrder, setReviewOrder] = useState()
 
+  const addToLocalStorage = (toAdd, nameToAdd) => {
+    const toAddAddJSON = JSON.stringify(toAdd)
+    localStorage.setItem(nameToAdd, toAddAddJSON)
+  }
+  const addOrDeleteProduct = ({
+    Category,
+    title,
+    price,
+    images,
+    setProductsAdd,
+    isInCart,
+    productsAdd,
+    description
+  }) => {
+    const product = [
+      ...productsAdd,
+      {
+        images,
+        Category,
+        title,
+        price,
+        description
+      }
+    ]
+
+    if (isInCart === -1) {
+      setProductsAdd(product)
+      addToLocalStorage(product, 'productsAdd')
+    } else {
+      const productsInCart = [...productsAdd]
+      productsInCart.splice(isInCart, 1)
+      setProductsAdd(productsInCart)
+      addToLocalStorage(productsInCart, 'productsAdd')
+    }
+  }
+  const addOrDeleteOrders = (toAdd) => {
+    const orders = JSON.parse(localStorage.getItem('orders'))
+    const isInOrders = orders.findIndex((order) => order.time === toAdd.time)
+    if (isInOrders === -1) addToLocalStorage(toAdd, 'orders')
+    if (isInOrders !== -1) {
+      const duplicatedOrders = [...orders]
+      duplicatedOrders.splice(isInOrders, 1)
+      addToLocalStorage(duplicatedOrders, 'orders')
+      setOrders(duplicatedOrders)
+    }
+  }
   return (
     <MyContext.Provider
       value={{
@@ -20,7 +70,14 @@ function GeneralContext ({ children }) {
         openProductDetail,
         setOpenProductDetail,
         isSell,
-        setIsSell
+        setIsSell,
+        orders,
+        setOrders,
+        addOrDeleteOrders,
+        addToLocalStorage,
+        addOrDeleteProduct,
+        reviewOrder,
+        setReviewOrder
       }}
     >
       {children}

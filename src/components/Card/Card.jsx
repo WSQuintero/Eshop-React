@@ -2,11 +2,18 @@ import React, { useContext } from 'react'
 import { MyContext } from '../../GeneralContext/GeneralContext'
 import { MdDeleteForever } from 'react-icons/md'
 import { GrAddCircle } from 'react-icons/gr'
-import { addOrDeleteProduct } from '../../logic/logic'
+import { useNavigate } from 'react-router-dom'
 
 function Card ({ Category, title, price, images, description }) {
-  const { productsAdd, setProductsAdd, setOpenProductDetail, setIsOpenCart } =
-    useContext(MyContext)
+  const {
+    productsAdd,
+    setProductsAdd,
+    setOpenProductDetail,
+    setIsOpenCart,
+    addOrDeleteProduct
+  } = useContext(MyContext)
+
+  const history = useNavigate()
 
   const isInCart = productsAdd.findIndex((product) => product.title === title)
   const necessaryInformation = {
@@ -42,7 +49,7 @@ function Card ({ Category, title, price, images, description }) {
         }}
       />
       <button
-        className={`z-1 transition-all duration-2000 ease-in-out absolute w-10 h-10 bg-gray-400 -top-4 -right-3 rounded-lg grid place-content-center ${
+        className={`z-1 text-gray-500 hover:text-gray-100 transition-all duration-2000 ease-in-out absolute w-10 h-10 bg-gray-300 -top-4 -right-3 rounded-lg grid place-content-center ${
           isInCart === -1
             ? 'hover:bg-green-400 hover:rounded-full hover:transform hover:rotate-180'
             : 'hover:bg-red-400'
@@ -54,8 +61,15 @@ function Card ({ Category, title, price, images, description }) {
         {isInCart !== -1 ? <MdDeleteForever /> : <GrAddCircle />}
       </button>
       <h2
+        onClick={() => {
+          history(
+            Category === "men's clothing"
+              ? "men'sClothing"
+              : `/${Category.split(' ').join('-')}`
+          )
+        }}
         id={colorsCategory[Category]}
-        className='z-1 absolute -top-5 -left-5 bg-gray-200  text-gray-700 p-3 w-40 rounded-md h-11 font-bold'
+        className='z-1 cursor-pointer absolute -top-5 -left-5 bg-gray-200  text-gray-700 p-3 w-40 transition-all duration-200 ease-in-out hover:w-[90%] rounded-md h-11 font-bold text-[12px]'
       >
         {Category.charAt(0).toUpperCase() + Category.slice(1)}
       </h2>

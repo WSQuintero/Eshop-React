@@ -14,7 +14,7 @@ function NavBar () {
   return (
     <nav className='flex justify-between items-center h-[100%] top-0 w-[100%]  '>
       <ul className='flex items-center'>
-        <li className={`font-bold ${borderLi}`}>
+        <li className={'font-bold px-3'}>
           <NavLink to='/'>Shopi</NavLink>
         </li>
         <li className={borderLi + ' hover:bg-gray-300'}>

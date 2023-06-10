@@ -3,8 +3,26 @@ import { MyContext } from '../../GeneralContext/GeneralContext'
 import Confetti from 'react-confetti'
 
 function Invoice () {
-  const { productsAdd, setProductsAdd, isSell, setIsSell } = useContext(MyContext)
+  const {
+    productsAdd,
+    setProductsAdd,
+    isSell,
+    setIsSell,
+    orders,
+    setOrders,
+    addOrDeleteOrders,
+    addToLocalStorage
+  } = useContext(MyContext)
+
   const totalPrice = productsAdd.reduce((a, b) => a + b.price, 0)
+  const toAdd = [
+    ...orders,
+    {
+      order: [...productsAdd],
+      date: new Date().toLocaleDateString(),
+      time: new Date().toLocaleTimeString()
+    }
+  ]
 
   return (
     <div className='flex flex-col items-center justify-center h-[95%]'>
@@ -45,7 +63,10 @@ function Invoice () {
           <button
             onClick={() => {
               setIsSell(true)
+              setOrders(toAdd)
               setProductsAdd([])
+              addOrDeleteOrders(toAdd)
+              addToLocalStorage([], 'productsAdd')
             }}
             className='border border-gray-400 p-4 rounded-xl mt-5 hover:bg-green-400  hover:text-white font-bold'
           >
@@ -55,7 +76,7 @@ function Invoice () {
       )}
       {isSell && (
         <div className='mt-20 h-[90%] flex items-center'>
-          <h2 className='font-bold text-[40px] text-green-600'>
+          <h2 className='font-bold text-[25px] text-green-600'>
             Tu compra ha sido completada
           </h2>
           <Confetti width={window.innerWidth} height={window.innerHeight} />

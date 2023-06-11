@@ -16,7 +16,7 @@ function GeneralContext ({ children }) {
   const [optionSelected, setOptionSelected] = useState('asc')
   const [isOpenBurguerMenu, setIsOpenBurguerMenu] = useState(false)
 
-  const [isLoged, setIsLoged] = useState(undefined)
+  const [isLoged, setIsLoged] = useState(false)
   const [emailValue, setEmailValue] = useState('')
   const [passwordValue, setPasswordValue] = useState('')
   const [nameValue, setNameValue] = useState('')

@@ -20,6 +20,9 @@ function SignUp () {
   } = useContext(MyContext)
   const navigate = useNavigate()
 
+  const userExist = users.some((us) => {
+    return us.email === emailValue
+  })
   function sendForm () {
     const user = {
       name: nameValue,
@@ -35,13 +38,10 @@ function SignUp () {
       user.repeatPassword !== ''
     ) {
       if (user.password === user.repeatPassword) {
-        const userExist = users.some((us) => {
-          return us.email === user.email
-        })
         if (userExist) {
           setError(['El email ya se encuentra registrado'])
         } else {
-          if (error !== '') {
+          if (error === '' || error === undefined) {
             setUsers([...users, user])
             navigate('/')
           }
@@ -113,8 +113,7 @@ function SignUp () {
           </div>
           <button
             type='button'
-            onClick={(event) => {
-              event.preventDefault()
+            onClick={() => {
               sendForm()
             }}
           >

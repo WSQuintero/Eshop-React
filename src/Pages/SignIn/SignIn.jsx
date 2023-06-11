@@ -3,14 +3,24 @@ import { MyContext } from '../../GeneralContext/GeneralContext'
 import { NavLink } from 'react-router-dom'
 
 function SignIn () {
-  const { emailValue, setEmailValue, passwordValue, setPasswordValue, users } =
-    useContext(MyContext)
+  const {
+    emailValue,
+    setEmailValue,
+    passwordValue,
+    setPasswordValue,
+    users,
+    setIsLoged
+  } = useContext(MyContext)
 
   const sendForm = (event) => {
     event.preventDefault()
 
-    const validate = users
-    console.log(event.target.email.value)
+    const validate = users.find((user) => {
+      return user.email === emailValue && user.password === passwordValue
+    })
+    if (validate !== undefined) {
+      setIsLoged(true)
+    }
   }
 
   return (

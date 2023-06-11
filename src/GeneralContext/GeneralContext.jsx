@@ -16,6 +16,15 @@ function GeneralContext ({ children }) {
   const [optionSelected, setOptionSelected] = useState('asc')
   const [isOpenBurguerMenu, setIsOpenBurguerMenu] = useState(false)
 
+  const [isLoged, setIsLoged] = useState(undefined)
+  const [emailValue, setEmailValue] = useState('')
+  const [passwordValue, setPasswordValue] = useState('')
+  const [nameValue, setNameValue] = useState('')
+  const [repeatPasswordValue, setRepeatPasswordValue] = useState('')
+  const [users, setUsers] = useState(
+    JSON.parse(localStorage.getItem('users')) || []
+  )
+  const [error, setError] = useState('')
   const addToLocalStorage = (toAdd, nameToAdd) => {
     const toAddAddJSON = JSON.stringify(toAdd)
     localStorage.setItem(nameToAdd, toAddAddJSON)
@@ -84,7 +93,21 @@ function GeneralContext ({ children }) {
         optionSelected,
         setOptionSelected,
         isOpenBurguerMenu,
-        setIsOpenBurguerMenu
+        setIsOpenBurguerMenu,
+        isLoged,
+        setIsLoged,
+        emailValue,
+        setEmailValue,
+        passwordValue,
+        setPasswordValue,
+        nameValue,
+        setNameValue,
+        repeatPasswordValue,
+        setRepeatPasswordValue,
+        users,
+        setUsers,
+        error,
+        setError
       }}
     >
       {children}

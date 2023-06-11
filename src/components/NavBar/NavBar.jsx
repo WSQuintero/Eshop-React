@@ -53,7 +53,7 @@ function NavBar () {
             handleResize()
           }}
         >
-          <NavLink to='/' onClick={() => setOptionSelected('asc')}>
+          <NavLink to='home' onClick={() => setOptionSelected('asc')}>
             Shopi
           </NavLink>
         </span>
@@ -77,7 +77,7 @@ function NavBar () {
                     setIsOpenBurguerMenu(false)
                     handleResize()
                   }}
-                  to={'/'}
+                  to={'home'}
                   className={({ isActive }) =>
                     isActive ? activeStyle : undefined
                   }
@@ -203,7 +203,17 @@ function NavBar () {
             : 'w-[30px] h-[30px] '
         }`}
       >
-        <IconContext.Provider value={{ className: 'shared-class', size: isOpenBurguerMenu && window.innerWidth < 1015 ? 50 : window.innerWidth >= 1015 ? 30 : 30 }}>
+        <IconContext.Provider
+          value={{
+            className: 'shared-class',
+            size:
+              isOpenBurguerMenu && window.innerWidth < 1015
+                ? 50
+                : window.innerWidth >= 1015
+                  ? 30
+                  : 30
+          }}
+        >
           <AiOutlineShoppingCart />
         </IconContext.Provider>
         <span className={countProductStyle}>{productsAdd.length}</span>

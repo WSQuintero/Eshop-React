@@ -11,12 +11,17 @@ function MyOrders () {
     }, 0)
   }
   const history = useNavigate()
+  const userOrders =
+    orders.filter(
+      (order) =>
+        order.email === JSON.parse(sessionStorage.getItem('actualUser')).email
+    ) || []
 
   return (
     <div className='w-[90%] absolute top-20 flex flex-col gap-6 '>
-      {orders.length !== 0
+      {userOrders.length !== 0
         ? (
-            orders?.map((order, index) => (
+            userOrders?.map((order, index) => (
           <article
             key={index}
             className='w-[100%] border border-gray-500 cursor-pointer relative'

@@ -10,8 +10,8 @@ function Invoice () {
     setIsSell,
     orders,
     setOrders,
-    addOrDeleteOrders,
-    addToLocalStorage
+    addOrDeleteOrders
+
   } = useContext(MyContext)
 
   const totalPrice = productsAdd.reduce((a, b) => a + b.price, 0)
@@ -19,6 +19,7 @@ function Invoice () {
     ...orders,
     {
       order: [...productsAdd],
+      email: JSON.parse(sessionStorage.getItem('actualUser')).email,
       date: new Date().toLocaleDateString('es-ES', {
         day: '2-digit',
         month: 'long',
@@ -74,7 +75,7 @@ function Invoice () {
               setOrders(toAdd)
               setProductsAdd([])
               addOrDeleteOrders(toAdd)
-              addToLocalStorage([], 'productsAdd')
+              localStorage.removeItem('productsAdd')
             }}
             className='border border-gray-400 p-4 rounded-xl mt-5 hover:bg-green-400  hover:text-white font-bold'
           >

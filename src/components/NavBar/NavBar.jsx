@@ -10,27 +10,29 @@ function NavBar () {
     productsAdd,
     setOptionSelected,
     isOpenBurguerMenu,
-    setIsOpenBurguerMenu
+    setIsOpenBurguerMenu,
+    setIsLoged
   } = useContext(MyContext)
   const activeStyle = 'underline underline-offset-4'
-  const { isOpenCart, setIsOpenCart } = useContext(MyContext)
+  const { isOpenCart, setIsOpenCart, isLoged } = useContext(MyContext)
   const navStyle = isOpenBurguerMenu
-    ? 'flex flex-col w-full lg:flex-row items-center text-lg lg:text-sm '
+    ? 'flex flex-col w-full h-[100vh]  lg:h-auto lg:flex-row items-center text-lg lg:text-sm '
     : 'flex w-full justify-between items-center'
   const containerButtonStyle = isOpenBurguerMenu
     ? 'flex  lg:flex-row gap-10 px-4 lg:bg-gray-600 bg-white text-gray-600 lg:text-gray-200 lg:w-auto text-4xl lg:text-sm justify-between p-4 mb-10 lg:mb-0 items-center relative w-[100%] top-o'
     : 'flex w-[90%] justify-between items-center'
   const containerLinks = isOpenBurguerMenu
-    ? 'lg:flex lg:flex-row lg:justify-between flex flex-col w-[100%] justify-center gap-10'
+    ? 'lg:flex lg:flex-row lg:justify-between flex flex-col w-[100%] justify-center gap-5'
     : ''
   const containerUl = isOpenBurguerMenu
-    ? 'lg:flex lg:flex-row gap-3 flex flex-col items-center text-start mb-10 lg:mb-0'
+    ? 'lg:flex lg:flex-row gap-2 flex flex-col items-center text-start mb-10 lg:mb-0'
     : ''
-  const countProductStyle =
-    `rounded-full w-5 h-5 border bg-gray-200 absolute -bottom-1 left-5 flex justify-center items-center place-content-center text-xl font-bold text-gray-500 text-center pb-1 
-     ${isOpenBurguerMenu && window.innerWidth < 1015
-      ? 'left-10 bottom-1 absolute w-[30px] h-[30px]'
-      : false}`
+  const countProductStyle = `rounded-full w-5 h-5 border bg-gray-200 absolute -bottom-1 left-5 flex justify-center items-center place-content-center text-xl font-bold text-gray-500 text-center pb-1 
+    ${
+      isOpenBurguerMenu && window.innerWidth < 1015
+        ? 'left-10 bottom-1 absolute w-[30px] h-[30px]'
+        : false
+    }`
   const handleResize = () => {
     const windowWidth = window.innerWidth
     setIsOpenBurguerMenu(windowWidth >= 1015)
@@ -53,7 +55,7 @@ function NavBar () {
             handleResize()
           }}
         >
-          <NavLink to='home' onClick={() => setOptionSelected('asc')}>
+          <NavLink to='/' onClick={() => setOptionSelected('asc')}>
             Shopi
           </NavLink>
         </span>
@@ -77,7 +79,7 @@ function NavBar () {
                     setIsOpenBurguerMenu(false)
                     handleResize()
                   }}
-                  to={'home'}
+                  to={'/'}
                   className={({ isActive }) =>
                     isActive ? activeStyle : undefined
                   }
@@ -143,50 +145,76 @@ function NavBar () {
               </li>
             </ul>
             <ul className={containerUl}>
-              <li>santiago@gmail.com</li>
-              <li>
-                <NavLink
-                  to={'/my-orders'}
-                  className={({ isActive }) =>
-                    isActive ? activeStyle : undefined
-                  }
-                  onClick={() => {
-                    setIsOpenBurguerMenu(false)
-                    handleResize()
-                  }}
-                >
-                  My Orders
-                </NavLink>
+              <li
+                onClick={() => {
+                  setIsOpenBurguerMenu(false)
+                  handleResize()
+                }}
+              >
+                {isLoged !== true
+                  ? (
+                  <NavLink to={'/sign-in'}>Sign in</NavLink>
+                    )
+                  : (
+                  <span>
+                    {JSON.parse(sessionStorage.getItem('actualUser')).email}
+                  </span>
+                    )}
               </li>
-              <li>
-                <NavLink
-                  to={'/my-account'}
-                  className={({ isActive }) =>
-                    isActive ? activeStyle : undefined
-                  }
-                  onClick={() => {
-                    setIsOpenBurguerMenu(false)
-                    handleResize()
-                  }}
-                >
-                  My Account{' '}
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to={'sign-out'}
-                  className={({ isActive }) =>
-                    isActive ? activeStyle : undefined
-                  }
-                  onClick={() => {
-                    setIsOpenBurguerMenu(false)
-                    handleResize()
-                  }}
-                >
-                  {' '}
-                  Sign out
-                </NavLink>
-              </li>
+
+              {!isLoged
+                ? (
+                    ''
+                  )
+                : (
+                <>
+                  <li>
+                    <NavLink
+                      to={'/my-orders'}
+                      className={({ isActive }) =>
+                        isActive ? activeStyle : undefined
+                      }
+                      onClick={() => {
+                        setIsOpenBurguerMenu(false)
+                        handleResize()
+                      }}
+                    >
+                      My Orders
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to={'/my-account'}
+                      className={({ isActive }) =>
+                        isActive ? activeStyle : undefined
+                      }
+                      onClick={() => {
+                        setIsOpenBurguerMenu(false)
+                        handleResize()
+                      }}
+                    >
+                      My Account{' '}
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to={'log-out'}
+                      className={({ isActive }) =>
+                        isActive ? activeStyle : undefined
+                      }
+                      onClick={() => {
+                        setIsOpenBurguerMenu(false)
+                        handleResize()
+                        setIsLoged(false)
+                        sessionStorage.removeItem('actualUser')
+                      }}
+                    >
+                      {' '}
+                      Log out
+                    </NavLink>
+                  </li>
+                </>
+                  )}
             </ul>
           </>
         )}

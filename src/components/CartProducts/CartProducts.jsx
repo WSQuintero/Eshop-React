@@ -4,7 +4,14 @@ import { Card } from '../Card/Card'
 import { useNavigate } from 'react-router-dom'
 
 function CartProducts () {
-  const { isOpenCart, productsAdd, setIsSell, setIsOpenCart } = useContext(MyContext)
+  const {
+    isOpenCart,
+    productsAdd,
+    setIsSell,
+    setIsOpenCart,
+    isLoged,
+    setTryBuyWithoutLogIn
+  } = useContext(MyContext)
 
   const cartProductsStyle = ` fixed top-0  flex flex-col min-h-[450px] max-h-[530px] transition-all duration-2000  rounded-3xl p-7 border-2 border-gray-400   ${
     productsAdd.length !== 0 ? 'justify-start' : 'justify-center text-white'
@@ -51,11 +58,18 @@ function CartProducts () {
               <strong>Total a pagar: </strong>
               {totalPrice.toFixed(2)}
             </span>
+
             <button
               onClick={() => {
-                history('/invoice')
-                setIsSell(false)
-                setIsOpenCart(!isOpenCart)
+                if (isLoged) {
+                  history('/invoice')
+                  setIsSell(false)
+                  setIsOpenCart(!isOpenCart)
+                } else {
+                  history('/sign-in')
+                  setIsOpenCart(!isOpenCart)
+                  setTryBuyWithoutLogIn(true)
+                }
               }}
               className='w-auto h-10 border border-gray-400 rounded-lg  p-5 flex justify-center items-center bg-white text-gray-800 font-bold absolute bottom-3'
             >

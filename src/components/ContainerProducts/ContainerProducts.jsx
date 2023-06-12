@@ -10,10 +10,8 @@ function ContainerProducts ({ route, nameCategory, sort }) {
   const [isCharged, setIsCharged] = useState(false)
 
   const temporal = Array(5).fill('*')
-  console.log(temporal)
   useEffect(() => {
     setIsCharged(true)
-    console.log(isCharged)
   }, [dataProducts])
 
   return (

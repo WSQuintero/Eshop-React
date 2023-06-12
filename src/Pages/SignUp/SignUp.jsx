@@ -25,10 +25,10 @@ function SignUp () {
   })
   function sendForm () {
     const user = {
-      name: nameValue,
-      email: emailValue,
-      password: passwordValue,
-      repeatPassword: repeatPasswordValue
+      name: String(nameValue),
+      email: String(emailValue),
+      password: String(passwordValue),
+      repeatPassword: String(repeatPasswordValue)
     }
 
     if (
@@ -43,7 +43,7 @@ function SignUp () {
         } else {
           if (error === '' || error === undefined) {
             setUsers([...users, user])
-            navigate('/')
+            navigate('/sign-in')
           }
         }
       } else {
@@ -53,7 +53,11 @@ function SignUp () {
       setError('Por favor diligencia todos los campos')
     }
   }
-
+  if (error !== '') {
+    setTimeout(() => {
+      setError('')
+    }, 2000)
+  }
   useEffect(() => {
     addToLocalStorage(users, 'users')
   }, [users])

@@ -16,7 +16,9 @@ function GeneralContext ({ children }) {
   const [optionSelected, setOptionSelected] = useState('asc')
   const [isOpenBurguerMenu, setIsOpenBurguerMenu] = useState(false)
 
-  const [isLoged, setIsLoged] = useState(false)
+  const [isLoged, setIsLoged] = useState(
+    JSON.parse(sessionStorage.getItem('actualUser')) !== null || false
+  )
   const [emailValue, setEmailValue] = useState('')
   const [passwordValue, setPasswordValue] = useState('')
   const [nameValue, setNameValue] = useState('')
@@ -25,10 +27,17 @@ function GeneralContext ({ children }) {
     JSON.parse(localStorage.getItem('users')) || []
   )
   const [error, setError] = useState('')
+  const [tryBuyWithoutLogIn, setTryBuyWithoutLogIn] = useState(false)
   const addToLocalStorage = (toAdd, nameToAdd) => {
     const toAddAddJSON = JSON.stringify(toAdd)
     localStorage.setItem(nameToAdd, toAddAddJSON)
   }
+  const addToSesionStorage = (toAdd, nameToAdd) => {
+    const toAddAddJSON = JSON.stringify(toAdd)
+    sessionStorage.setItem(nameToAdd, toAddAddJSON)
+  }
+
+  const [selectedImage, setSelectedImage] = useState(null)
   const addOrDeleteProduct = ({
     Category,
     title,
@@ -61,7 +70,7 @@ function GeneralContext ({ children }) {
     }
   }
   const addOrDeleteOrders = (toAdd) => {
-    const orders = JSON.parse(localStorage.getItem('orders'))
+    const orders = JSON.parse(localStorage.getItem('orders')) || []
     const isInOrders = orders.findIndex((order) => order.time === toAdd.time)
     if (isInOrders === -1) addToLocalStorage(toAdd, 'orders')
     if (isInOrders !== -1) {
@@ -107,7 +116,12 @@ function GeneralContext ({ children }) {
         users,
         setUsers,
         error,
-        setError
+        setError,
+        tryBuyWithoutLogIn,
+        setTryBuyWithoutLogIn,
+        addToSesionStorage,
+        selectedImage,
+        setSelectedImage
       }}
     >
       {children}

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { MyContext } from '../../GeneralContext/GeneralContext'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { AlertNoSignIn } from '../../components/AlertNoSignIn/AlertNoSignIn'
 
 function SignIn () {
   const {
@@ -9,17 +10,45 @@ function SignIn () {
     passwordValue,
     setPasswordValue,
     users,
-    setIsLoged
+    setIsLoged,
+    tryBuyWithoutLogIn,
+    setTryBuyWithoutLogIn,
+    error,
+    setError,
+    addToSesionStorage,
+    setIsOpenCart
   } = useContext(MyContext)
+
+  const history = useNavigate()
+  if (error !== '') {
+    setTimeout(() => {
+      setError('')
+    }, 2000)
+  }
+  if (tryBuyWithoutLogIn) {
+    setTimeout(() => {
+      setTryBuyWithoutLogIn(false)
+    }, 2000)
+  }
 
   const sendForm = (event) => {
     event.preventDefault()
 
     const validate = users.find((user) => {
-      return user.email === emailValue && user.password === passwordValue
+      return String(user.email) === String(emailValue)
     })
+
     if (validate !== undefined) {
-      setIsLoged(true)
+      if (String(validate.password) === String(passwordValue)) {
+        setIsLoged(true)
+        history('/')
+        addToSesionStorage(validate, 'actualUser')
+        setIsOpenCart(false)
+      } else {
+        setError('La contraseña no es correcta')
+      }
+    } else {
+      setError('El usuario no se encuentra registrado')
     }
   }
 
@@ -56,6 +85,14 @@ function SignIn () {
           </span>
         </form>
       </div>
+      {tryBuyWithoutLogIn ? <AlertNoSignIn /> : false}
+      {error !== ''
+        ? (
+        <span className='font-bold text-red-600 mt-4'>{error}</span>
+          )
+        : (
+            false
+          )}
     </div>
   )
 }

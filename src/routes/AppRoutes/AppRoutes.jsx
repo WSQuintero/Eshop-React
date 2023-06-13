@@ -16,7 +16,7 @@ import { LogOut } from '../../Pages/LogOut/LogOut'
 
 function AppRoutes () {
   const routes = useRoutes([
-    { path: '/', element: <Home /> },
+    { path: '/', element: <Home />, exact: true },
     { path: "/men'sClothing", element: <MensCLothing /> },
     { path: '/electronics', element: <Electronics /> },
     { path: '/jewelery', element: <Jewelery /> },

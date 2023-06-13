@@ -89,7 +89,7 @@ function NavBar () {
               </li>
               <li id='mensClothing-hover'>
                 <NavLink
-                  to={"men'sClothing"}
+                  to={"/men'sClothing"}
                   className={({ isActive }) =>
                     isActive ? activeStyle : undefined
                   }
@@ -103,7 +103,7 @@ function NavBar () {
               </li>
               <li id='electronics-hover'>
                 <NavLink
-                  to={'./electronics'}
+                  to={'/electronics'}
                   className={({ isActive }) =>
                     isActive ? activeStyle : undefined
                   }
@@ -117,7 +117,7 @@ function NavBar () {
               </li>
               <li id='jewelery-hover'>
                 <NavLink
-                  to={'./jewelery'}
+                  to={'/jewelery'}
                   className={({ isActive }) =>
                     isActive ? activeStyle : undefined
                   }
@@ -131,7 +131,7 @@ function NavBar () {
               </li>
               <li id='womensClothing-hover'>
                 <NavLink
-                  to={"./women's-clothing"}
+                  to={"/women's-clothing"}
                   className={({ isActive }) =>
                     isActive ? activeStyle : undefined
                   }
@@ -153,7 +153,7 @@ function NavBar () {
               >
                 {isLoged !== true
                   ? (
-                  <NavLink to={'./sign-in'}>Sign in</NavLink>
+                  <NavLink to={'/sign-in'}>Sign in</NavLink>
                     )
                   : (
                   <span>
@@ -170,7 +170,7 @@ function NavBar () {
                 <>
                   <li>
                     <NavLink
-                      to={'./my-orders'}
+                      to={'/my-orders'}
                       className={({ isActive }) =>
                         isActive ? activeStyle : undefined
                       }
@@ -184,7 +184,7 @@ function NavBar () {
                   </li>
                   <li>
                     <NavLink
-                      to={'./my-account'}
+                      to={'/my-account'}
                       className={({ isActive }) =>
                         isActive ? activeStyle : undefined
                       }
@@ -198,7 +198,7 @@ function NavBar () {
                   </li>
                   <li>
                     <NavLink
-                      to={'./log-out'}
+                      to={'/log-out'}
                       className={({ isActive }) =>
                         isActive ? activeStyle : undefined
                       }

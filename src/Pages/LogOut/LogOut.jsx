@@ -11,7 +11,7 @@ function LogOut () {
         onClick={() => {
           history('/sign-in')
         }}
-      >SignIn</button>
+      >Sign-In</button>
     </div>
   )
 }

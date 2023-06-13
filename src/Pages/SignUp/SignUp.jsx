@@ -65,7 +65,7 @@ function SignUp () {
   return (
     <div className='w-full h-[100vh] flex flex-col items-center justify-center'>
       <div className='p-10 border border-gray-400'>
-        <h2 className='mb-10 text-center'>Sign Up</h2>
+        <h2 className='mb-10 text-center font-bold'>Create new account</h2>
         <form className='flex flex-col gap-7'>
           <div className='flex w-full justify-between'>
             <label>Nombre:</label>
@@ -120,6 +120,7 @@ function SignUp () {
             onClick={() => {
               sendForm()
             }}
+            className='border border-gray-400 p-2 rounded-lg hover:bg-green-400 font-semibold hover:text-white'
           >
             Sign Up
           </button>

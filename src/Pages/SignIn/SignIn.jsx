@@ -30,13 +30,11 @@ function SignIn () {
       setTryBuyWithoutLogIn(false)
     }, 2000)
   }
-
+  const validate = users.find((user) => {
+    return String(user.email) === String(emailValue)
+  })
   const sendForm = (event) => {
     event.preventDefault()
-
-    const validate = users.find((user) => {
-      return String(user.email) === String(emailValue)
-    })
 
     if (validate !== undefined) {
       if (String(validate.password) === String(passwordValue)) {
@@ -55,7 +53,7 @@ function SignIn () {
   return (
     <div className='w-full h-[100vh] flex flex-col items-center justify-center'>
       <div className='p-10 border border-gray-400'>
-        <h2 className='mb-10 text-center'>Sign In</h2>
+        <h2 className='mb-10 text-center font-bold'>Welcome</h2>
         <form className='flex flex-col gap-7' onSubmit={sendForm}>
           <div className='flex w-full justify-between'>
             <label>Email:</label>
@@ -79,8 +77,8 @@ function SignIn () {
               }}
             />
           </div>
-          <button type='submit'>Sign In</button>
-          <span>
+          <button type='submit' className='border border-gray-400 p-2 rounded-lg hover:bg-green-400 font-semibold hover:text-white' disabled={validate === undefined}>Sign In</button>
+          <span className='text-center'>
             <NavLink to={'/sign-up'}>¿Aún no tienes cuenta?</NavLink>
           </span>
         </form>

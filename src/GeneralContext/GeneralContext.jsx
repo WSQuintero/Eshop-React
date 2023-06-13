@@ -36,7 +36,6 @@ function GeneralContext ({ children }) {
     const toAddAddJSON = JSON.stringify(toAdd)
     sessionStorage.setItem(nameToAdd, toAddAddJSON)
   }
-
   const [selectedImage, setSelectedImage] = useState(null)
   const addOrDeleteProduct = ({
     Category,

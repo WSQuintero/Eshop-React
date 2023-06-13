@@ -62,8 +62,8 @@ function MyAccount () {
 
   return (
     <div className='w-full h-[100vh] flex flex-col justify-center items-center'>
-      <figure>
-        <div className='w-[150px] h-[150px] bg-gray-300 rounded-full relative'>
+      <figure className='w-full h-[250px] flex flex-col justify-center items-center'>
+        <div className='w-[150px] h-[150px] bg-gray-300 rounded-full relative flex justify-center items-center'>
           <img
             className='w-full h-full rounded-full'
             src={

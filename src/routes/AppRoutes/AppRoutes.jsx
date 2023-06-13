@@ -17,18 +17,18 @@ import { LogOut } from '../../Pages/LogOut/LogOut'
 function AppRoutes () {
   const routes = useRoutes([
     { path: '/', element: <Home /> },
-    { path: "./men'sClothing", element: <MensCLothing /> },
-    { path: './electronics', element: <Electronics /> },
-    { path: './jewelery', element: <Jewelery /> },
-    { path: "./women's-clothing", element: <WomensClothing /> },
-    { path: './my-account', element: <MyAccount /> },
-    { path: './my-order', element: <MyOrder /> },
-    { path: './my-orders', element: <MyOrders /> },
+    { path: "/men'sClothing", element: <MensCLothing /> },
+    { path: '/electronics', element: <Electronics /> },
+    { path: '/jewelery', element: <Jewelery /> },
+    { path: "/women's-clothing", element: <WomensClothing /> },
+    { path: '/my-account', element: <MyAccount /> },
+    { path: '/my-order', element: <MyOrder /> },
+    { path: '/my-orders', element: <MyOrders /> },
     { path: '*', element: <NotFound /> },
-    { path: './sign-in', element: <SignIn /> },
-    { path: './sign-up', element: <SignUp /> },
-    { path: './invoice', element: <Invoice /> },
-    { path: './log-out', element: <LogOut /> }
+    { path: '/sign-in', element: <SignIn /> },
+    { path: '/sign-up', element: <SignUp /> },
+    { path: '/invoice', element: <Invoice /> },
+    { path: '/log-out', element: <LogOut /> }
   ])
   return routes
 }

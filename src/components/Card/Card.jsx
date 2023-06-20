@@ -5,17 +5,11 @@ import { GrAddCircle } from 'react-icons/gr'
 import { useNavigate } from 'react-router-dom'
 
 function Card ({ Category, title, price, images, description }) {
-  const {
-    productsAdd,
-    setProductsAdd,
-    setOpenProductDetail,
-    setIsOpenCart,
-    addOrDeleteProduct
-  } = useContext(MyContext)
+  const { dispatch, state } = useContext(MyContext)
 
   const history = useNavigate()
 
-  const isInCart = productsAdd.findIndex((product) => product.title === title)
+  const isInCart = state.productsAdd.findIndex((product) => product.title === title)
 
   const colorsCategory = {
     "men's clothing": 'mensClothing',

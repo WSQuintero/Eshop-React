@@ -1,6 +1,8 @@
 import React, { useContext, useEffect } from 'react'
 import { MyContext } from '../../GeneralContext/GeneralContext'
 import { useNavigate } from 'react-router-dom'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import auth from '../../services/firebaseAuth'
 
 function SignUp () {
   const {
@@ -20,7 +22,8 @@ function SignUp () {
   const userExist = users.some((us) => {
     return us.email === emailValue
   })
-  function sendForm () {
+
+  async function sendForm () {
     const user = {
       name: String(nameValue),
       email: String(emailValue),
@@ -36,11 +39,29 @@ function SignUp () {
     ) {
       if (user.password === user.repeatPassword) {
         if (userExist) {
-          dispatch({ type: 'THERE_IS_AN_ERROR', value: 'El email ya se encuentra registrado' })
+          dispatch({
+            type: 'THERE_IS_AN_ERROR',
+            value: 'El email ya se encuentra registrado'
+          })
         } else {
-          if (error === '' || error === undefined) {
+          try {
+            const newUserCredential = await createUserWithEmailAndPassword(
+              auth,
+              user.email,
+              user.password
+            )
+            const newUser = newUserCredential.user
+            // Aquí puedes realizar acciones adicionales después de crear el usuario en Firebase
+            console.log('Usuario creado:', newUser)
             dispatch({ type: 'ADD_USERS', value: [...users, user] })
             navigate('/sign-in')
+          } catch (error) {
+            // Manejo de errores de Firebase Authentication
+            console.log('Error al crear el usuario:', error.message)
+            dispatch({
+              type: 'THERE_IS_AN_ERROR',
+              value: 'Error al crear el usuario'
+            })
           }
         }
       } else {
@@ -56,6 +77,7 @@ function SignUp () {
       })
     }
   }
+
   if (error !== '') {
     setTimeout(() => {
       dispatch({
@@ -64,6 +86,7 @@ function SignUp () {
       })
     }, 2000)
   }
+
   useEffect(() => {
     addToLocalStorage(users, 'users')
   }, [users])
@@ -124,6 +147,7 @@ function SignUp () {
               value={repeatPasswordValue}
               onChange={(event) => {
                 dispatch({
+                  type: 'CH_REPEAT_PASSWORD_VALUE',
                   value: event.target.value
                 })
               }}

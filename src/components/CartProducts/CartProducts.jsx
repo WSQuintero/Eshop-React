@@ -45,7 +45,7 @@ function CartProducts () {
             ? (
                 productsAdd.map((product) => (
               <Card
-                key={product.title}
+                key={`${product.title}${product.price}`}
                 Category={product.Category}
                 title={product.title}
                 price={product.price}

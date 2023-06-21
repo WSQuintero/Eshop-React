@@ -7,6 +7,7 @@ function MyOrder () {
   const totalPrice = reviewOrder.order.reduce((a, b) => {
     return a + b.price
   }, 0)
+
   return (
     <section className='border border-gray-400 px-10 py-5  mt-[70px] rounded-2xl w-[98%] '>
       <p className='flex flex-col sm:flex-row justify-between w-[100%] border-b  border-gray-500 pb-5'>

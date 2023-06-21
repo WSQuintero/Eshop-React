@@ -11,7 +11,7 @@ function Home () {
     <>
       <div className='pt-10 border-b border-dotted border-gray-800 relative top-[70px] pb-5'>
         <label
-          htmlFor='miLista'
+          htmlFor='sort'
           className='w-auto  rounded-md flex gap-10 justify-center border border-gray-300 p-2 font-bold text-xl  bg-gray-100  items-center'
         >
           Ordenar: {'  '}

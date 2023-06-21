@@ -16,7 +16,7 @@ function ContainerProducts ({ route, nameCategory, sort }) {
 
   return (
     <>
-      {isCharged
+      {dataProducts.length !== 0
         ? (
         <>
           <section
@@ -52,7 +52,7 @@ function ContainerProducts ({ route, nameCategory, sort }) {
                 Category={'product.category'}
                 title={'product.title'}
                 price={'$500'}
-                images='https://interaxiona.com/wp-content/uploads/2018/08/cargando-loading-043.gif'
+                images='https://media3.giphy.com/media/3oEjI6SIIHBdRxXI40/200w.gif?cid=6c09b952ty7k21jtadbdlu4aw3gj8zwct292jybunjxy3fzv&ep=v1_gifs_search&rid=200w.gif&ct=g'
                 description={'product.description'}
                 isCharged={isCharged}
               />

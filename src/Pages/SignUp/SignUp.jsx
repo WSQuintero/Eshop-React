@@ -74,9 +74,10 @@ function SignUp () {
         <h2 className='mb-10 text-center font-bold'>Create new account</h2>
         <form className='flex flex-col gap-7'>
           <div className='flex w-full justify-between'>
-            <label>Nombre:</label>
+            <label htmlFor='name'>Nombre:</label>
             <input
               type='text'
+              id='name'
               name='name'
               value={nameValue}
               onChange={(event) => {
@@ -86,9 +87,10 @@ function SignUp () {
             />
           </div>
           <div className='flex w-full justify-between'>
-            <label>Email:</label>
+            <label htmlFor='email'>Email:</label>
             <input
               type='email'
+              id='email'
               name='email'
               value={emailValue}
               onChange={(event) => {
@@ -98,9 +100,10 @@ function SignUp () {
             />
           </div>
           <div className='flex w-full justify-between'>
-            <label>Password:</label>
+            <label htmlFor='password'>Password:</label>
             <input
               type='password'
+              id='password'
               name='password'
               value={passwordValue}
               onChange={(event) => {
@@ -113,9 +116,10 @@ function SignUp () {
             />
           </div>
           <div className='flex w-full justify-between'>
-            <label>Repeat password:</label>
+            <label htmlFor='repeatPassword'>Repeat password:</label>
             <input
               type='password'
+              id='repeatPassword'
               name='repeatPassword'
               value={repeatPasswordValue}
               onChange={(event) => {

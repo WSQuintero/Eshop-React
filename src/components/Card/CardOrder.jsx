@@ -4,29 +4,31 @@ import { MyContext } from '../../GeneralContext/GeneralContext'
 function CardOrder ({ Category, title, price, images, description }) {
   const { dispatch } = useContext(MyContext)
 
+  const handleClickImage = () => {
+    dispatch({
+      type: 'INFORMATION_PRODUCT_DETAIL',
+      value: [
+        true,
+        { Category, title, price, images, description }
+      ]
+    }
+    )
+    dispatch({ type: 'CLOSE-CART' })
+  }
+
   const colorsCategory = {
     "men's clothing": 'mensClothing',
     electronics: 'electronics',
     jewelery: 'jewelery',
     "women's clothing": 'womensClothing'
   }
-
   return (
     <article className='relative border border-gray-400  w-[200px] px-3 py-6 h-[250px] rounded-3xl bg-white flex-shrink-0 '>
       <img
         src={images}
         alt=''
         className='z-0 mb-5 w-full h-[200px] rounded-3xl cursor-pointer '
-        onClick={() => {
-          dispatch({
-            type: 'ADD_PRODUCT',
-            value: [
-              true,
-              { Category, title, price, images, description }
-            ]
-          })
-          dispatch({ type: 'CLOSE-CART' })
-        }}
+        onClick={handleClickImage}
       />
       <h2
         id={colorsCategory[Category]}

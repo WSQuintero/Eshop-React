@@ -56,9 +56,10 @@ function SignIn () {
         <h2 className='mb-10 text-center font-bold'>Welcome</h2>
         <form className='flex flex-col gap-7' onSubmit={sendForm}>
           <div className='flex w-full justify-between'>
-            <label>Email:</label>
+            <label htmlFor='email'>Email:</label>
             <input
               type='email'
+              id='email'
               name='email'
               value={emailValue}
               onChange={(event) => {
@@ -67,17 +68,27 @@ function SignIn () {
             />
           </div>
           <div className='flex w-full justify-between'>
-            <label>Password:</label>
+            <label htmlFor='password'>Password:</label>
             <input
               type='password'
+              id='password'
               name='password'
               value={passwordValue}
               onChange={(event) => {
-                dispatch({ type: 'CH_PASSWORD_VALUE', value: event.target.value })
+                dispatch({
+                  type: 'CH_PASSWORD_VALUE',
+                  value: event.target.value
+                })
               }}
             />
           </div>
-          <button type='submit' className='border border-gray-400 p-2 rounded-lg hover:bg-green-400 font-semibold hover:text-white' disabled={validate === undefined}>Sign In</button>
+          <button
+            type='submit'
+            className='border border-gray-400 p-2 rounded-lg hover:bg-green-400 font-semibold hover:text-white'
+            disabled={validate === undefined}
+          >
+            Sign In
+          </button>
           <span className='text-center'>
             <NavLink to={'/sign-up'}>¿Aún no tienes cuenta?</NavLink>
           </span>

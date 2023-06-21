@@ -4,19 +4,16 @@ import { useNavigate } from 'react-router-dom'
 
 function SignUp () {
   const {
-    emailValue,
-    setEmailValue,
-    passwordValue,
-    setPasswordValue,
-    nameValue,
-    setNameValue,
-    repeatPasswordValue,
-    setRepeatPasswordValue,
+    state: {
+      emailValue,
+      passwordValue,
+      nameValue,
+      repeatPasswordValue,
+      users,
+      error
+    },
     addToLocalStorage,
-    setUsers,
-    users,
-    error,
-    setError
+    dispatch
   } = useContext(MyContext)
   const navigate = useNavigate()
 
@@ -39,23 +36,32 @@ function SignUp () {
     ) {
       if (user.password === user.repeatPassword) {
         if (userExist) {
-          setError(['El email ya se encuentra registrado'])
+          dispatch({ type: 'THERE_IS_AN_ERROR', value: 'El email ya se encuentra registrado' })
         } else {
           if (error === '' || error === undefined) {
-            setUsers([...users, user])
+            dispatch({ type: 'ADD_USERS', value: [...users, user] })
             navigate('/sign-in')
           }
         }
       } else {
-        setError(['Las contraseñas deben coincidir'])
+        dispatch({
+          type: 'THERE_IS_AN_ERROR',
+          value: 'Las contraseñas deben coincidir'
+        })
       }
     } else {
-      setError('Por favor diligencia todos los campos')
+      dispatch({
+        type: 'THERE_IS_AN_ERROR',
+        value: 'Por favor diligencia todos los campos'
+      })
     }
   }
   if (error !== '') {
     setTimeout(() => {
-      setError('')
+      dispatch({
+        type: 'THERE_IS_AN_ERROR',
+        value: ''
+      })
     }, 2000)
   }
   useEffect(() => {
@@ -68,49 +74,58 @@ function SignUp () {
         <h2 className='mb-10 text-center font-bold'>Create new account</h2>
         <form className='flex flex-col gap-7'>
           <div className='flex w-full justify-between'>
-            <label>Nombre:</label>
+            <label htmlFor='name'>Nombre:</label>
             <input
               type='text'
+              id='name'
               name='name'
               value={nameValue}
               onChange={(event) => {
-                setNameValue(event.target.value)
+                dispatch({ type: 'CH_NAME_VALUE', value: event.target.value })
               }}
               required
             />
           </div>
           <div className='flex w-full justify-between'>
-            <label>Email:</label>
+            <label htmlFor='email'>Email:</label>
             <input
               type='email'
+              id='email'
               name='email'
               value={emailValue}
               onChange={(event) => {
-                setEmailValue(event.target.value)
+                dispatch({ type: 'CH_EMAIL_VALUE', value: event.target.value })
               }}
               required
             />
           </div>
           <div className='flex w-full justify-between'>
-            <label>Password:</label>
+            <label htmlFor='password'>Password:</label>
             <input
               type='password'
+              id='password'
               name='password'
               value={passwordValue}
               onChange={(event) => {
-                setPasswordValue(event.target.value)
+                dispatch({
+                  type: 'CH_PASSWORD_VALUE',
+                  value: event.target.value
+                })
               }}
               required
             />
           </div>
           <div className='flex w-full justify-between'>
-            <label>Repeat password:</label>
+            <label htmlFor='repeatPassword'>Repeat password:</label>
             <input
               type='password'
+              id='repeatPassword'
               name='repeatPassword'
               value={repeatPasswordValue}
               onChange={(event) => {
-                setRepeatPasswordValue(event.target.value)
+                dispatch({
+                  value: event.target.value
+                })
               }}
               required
             />

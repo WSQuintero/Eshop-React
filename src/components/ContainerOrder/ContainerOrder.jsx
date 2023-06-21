@@ -4,7 +4,7 @@ import { MyContext } from '../../GeneralContext/GeneralContext'
 import { CardOrder } from '../Card/CardOrder'
 
 function ContainerOrder ({ dataProducts }) {
-  const { openProductDetail } = useContext(MyContext)
+  const { state: { openProductDetail } } = useContext(MyContext)
 
   return (
     <>

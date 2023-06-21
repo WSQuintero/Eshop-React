@@ -1,48 +1,24 @@
-import React, { createContext, useState } from 'react'
-
+import React, { createContext, useReducer } from 'react'
+import { initialState, reducer } from '../reducer/reducer'
 const MyContext = createContext()
 
 function GeneralContext ({ children }) {
-  const [isOpenCart, setIsOpenCart] = useState(false)
-  const [productsAdd, setProductsAdd] = useState(
-    JSON.parse(localStorage.getItem('productsAdd')) || []
-  )
-  const [openProductDetail, setOpenProductDetail] = useState([false, {}])
-  const [isSell, setIsSell] = useState(false)
-  const [orders, setOrders] = useState(
-    JSON.parse(localStorage.getItem('orders')) || []
-  )
-  const [reviewOrder, setReviewOrder] = useState()
-  const [optionSelected, setOptionSelected] = useState('asc')
-  const [isOpenBurguerMenu, setIsOpenBurguerMenu] = useState(false)
+  const [state, dispatch] = useReducer(reducer, initialState)
 
-  const [isLoged, setIsLoged] = useState(
-    JSON.parse(sessionStorage.getItem('actualUser')) !== null || false
-  )
-  const [emailValue, setEmailValue] = useState('')
-  const [passwordValue, setPasswordValue] = useState('')
-  const [nameValue, setNameValue] = useState('')
-  const [repeatPasswordValue, setRepeatPasswordValue] = useState('')
-  const [users, setUsers] = useState(
-    JSON.parse(localStorage.getItem('users')) || []
-  )
-  const [error, setError] = useState('')
-  const [tryBuyWithoutLogIn, setTryBuyWithoutLogIn] = useState(false)
   const addToLocalStorage = (toAdd, nameToAdd) => {
-    const toAddAddJSON = JSON.stringify(toAdd)
-    localStorage.setItem(nameToAdd, toAddAddJSON)
+    localStorage.setItem(nameToAdd, JSON.stringify(toAdd))
   }
   const addToSesionStorage = (toAdd, nameToAdd) => {
-    const toAddAddJSON = JSON.stringify(toAdd)
-    sessionStorage.setItem(nameToAdd, toAddAddJSON)
+    sessionStorage.setItem(
+      nameToAdd,
+      JSON.stringify(toAdd)
+    )
   }
-  const [selectedImage, setSelectedImage] = useState(null)
   const addOrDeleteProduct = ({
     Category,
     title,
     price,
     images,
-    setProductsAdd,
     isInCart,
     productsAdd,
     description
@@ -59,12 +35,12 @@ function GeneralContext ({ children }) {
     ]
 
     if (isInCart === -1) {
-      setProductsAdd(product)
+      dispatch({ type: 'ADD_PRODUCT', value: product })
       addToLocalStorage(product, 'productsAdd')
     } else {
       const productsInCart = [...productsAdd]
       productsInCart.splice(isInCart, 1)
-      setProductsAdd(productsInCart)
+      dispatch({ type: 'ADD_PRODUCT', value: productsInCart })
       addToLocalStorage(productsInCart, 'productsAdd')
     }
   }
@@ -76,51 +52,19 @@ function GeneralContext ({ children }) {
       const duplicatedOrders = [...orders]
       duplicatedOrders.splice(isInOrders, 1)
       addToLocalStorage(duplicatedOrders, 'orders')
-      setOrders(duplicatedOrders)
+      dispatch({ type: 'ADD_ORDERS', value: duplicatedOrders })
     }
   }
 
   return (
     <MyContext.Provider
       value={{
-        isOpenCart,
-        setIsOpenCart,
-        productsAdd,
-        setProductsAdd,
-        openProductDetail,
-        setOpenProductDetail,
-        isSell,
-        setIsSell,
-        orders,
-        setOrders,
         addOrDeleteOrders,
         addToLocalStorage,
         addOrDeleteProduct,
-        reviewOrder,
-        setReviewOrder,
-        optionSelected,
-        setOptionSelected,
-        isOpenBurguerMenu,
-        setIsOpenBurguerMenu,
-        isLoged,
-        setIsLoged,
-        emailValue,
-        setEmailValue,
-        passwordValue,
-        setPasswordValue,
-        nameValue,
-        setNameValue,
-        repeatPasswordValue,
-        setRepeatPasswordValue,
-        users,
-        setUsers,
-        error,
-        setError,
-        tryBuyWithoutLogIn,
-        setTryBuyWithoutLogIn,
         addToSesionStorage,
-        selectedImage,
-        setSelectedImage
+        dispatch,
+        state
       }}
     >
       {children}

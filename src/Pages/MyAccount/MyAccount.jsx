@@ -5,7 +5,7 @@ import { MyContext } from '../../GeneralContext/GeneralContext'
 
 function MyAccount () {
   let imageInLocalStorage
-  const { selectedImage, setSelectedImage, users, addToLocalStorage } =
+  const { state: { selectedImage, setSelectedImage, users }, addToLocalStorage } =
     useContext(MyContext)
   const actualUser = JSON.parse(sessionStorage.getItem('actualUser')) || {}
   const usersCopied = [...users]
@@ -18,28 +18,6 @@ function MyAccount () {
       (user) => user.email === actualUser.email
     ).image
   }
-  /* FileReader es una interfaz del API de JavaScript que permite
-  leer el contenido de archivos de forma asíncrona. Proporciona métodos
-  para leer archivos de distintos tipos, como imágenes, texto, audio, video,
-  entre otros.
-
-  FileReader es especialmente útil cuando se necesita acceder al contenido de
-  un archivo seleccionado por el usuario a través de un elemento <input> de tipo
-  "file". Permite leer los datos del archivo y utilizarlos en la aplicación web.
-
-  Algunos métodos importantes de FileReader son:
-
-  readAsDataURL(file): Lee el contenido del archivo y devuelve una cadena en
-  formato base64 que representa los datos del archivo. Es comúnmente utilizado
-  para leer imágenes y mostrarlas en la interfaz de usuario.
-
-  readAsText(file, encoding): Lee el contenido del archivo y devuelve una cadena
-  de texto que representa los datos del archivo. Es útil cuando se necesita acceder
-  al contenido de archivos de texto, como archivos CSV o archivos de configuración.
-
-  onload: Evento que se dispara cuando la lectura del archivo se ha completado correctamente.
-   Se puede utilizar para realizar acciones después de que se haya leído el archivo,
-   como actualizar la interfaz de usuario o procesar los datos obtenidos. */
 
   useEffect(() => {
     const reader = new FileReader()

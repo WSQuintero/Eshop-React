@@ -3,7 +3,7 @@ import { MyContext } from '../../GeneralContext/GeneralContext'
 import { useNavigate } from 'react-router-dom'
 
 function MyOrders () {
-  const { orders, addOrDeleteOrders, setReviewOrder } =
+  const { state: { orders }, addOrDeleteOrders, dispatch } =
     useContext(MyContext)
   const totalPrice = (order) => {
     return order.reduce((a, b) => {
@@ -27,7 +27,7 @@ function MyOrders () {
             className='w-[100%] border border-gray-500 cursor-pointer relative'
             onClick={() => {
               history('/my-order')
-              setReviewOrder(order)
+              dispatch({ type: 'REVIEW_ORDER', value: order })
             }}
           >
             <button

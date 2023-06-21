@@ -3,7 +3,10 @@ import { ContainerProducts } from '../../components/ContainerProducts/ContainerP
 import { MyContext } from '../../GeneralContext/GeneralContext'
 
 function Home () {
-  const { optionSelected, setOptionSelected } = useContext(MyContext)
+  const {
+    state: { optionSelected },
+    dispatch
+  } = useContext(MyContext)
   return (
     <>
       <div className='pt-10 border-b border-dotted border-gray-800 relative top-[70px] pb-5'>
@@ -15,7 +18,7 @@ function Home () {
           <select
             name='sort'
             id='sort'
-            onChange={(e) => setOptionSelected(e.target.value)}
+            onChange={(e) => dispatch({ type: 'ORDER', value: e.target.value })}
             className='font-light bg-gray-200 p-2'
           >
             <option value='asc' className='font-light bg-gray-200 text-sm'>

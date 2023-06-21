@@ -4,14 +4,9 @@ import Confetti from 'react-confetti'
 
 function Invoice () {
   const {
-    productsAdd,
-    setProductsAdd,
-    isSell,
-    setIsSell,
-    orders,
-    setOrders,
-    addOrDeleteOrders
-
+    state: { productsAdd, isSell, orders },
+    addOrDeleteOrders,
+    dispatch
   } = useContext(MyContext)
 
   const totalPrice = productsAdd.reduce((a, b) => a + b.price, 0)
@@ -71,9 +66,9 @@ function Invoice () {
           </div>
           <button
             onClick={() => {
-              setIsSell(true)
-              setOrders(toAdd)
-              setProductsAdd([])
+              dispatch({ type: 'IS_SELL' })
+              dispatch({ type: 'ADD_ORDERS', value: toAdd })
+              dispatch({ type: 'ADD_PRODUCT', value: [] })
               addOrDeleteOrders(toAdd)
               localStorage.removeItem('productsAdd')
             }}

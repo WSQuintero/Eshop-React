@@ -2,7 +2,11 @@ import React, { useContext } from 'react'
 import { MyContext } from '../../GeneralContext/GeneralContext'
 
 function ProductDetail () {
-  const { openProductDetail, setOpenProductDetail } = useContext(MyContext)
+  const {
+    state: { openProductDetail },
+    dispatch
+  } = useContext(MyContext)
+
   const { Category, title, price, images, description } = openProductDetail[1]
   const colorsCategory = {
     "men's clothing": 'mensClothing',
@@ -30,7 +34,7 @@ function ProductDetail () {
         <button
           className='w-[60px] h-[60px] absolute bg-gray-400 -top-6 -right-4 rounded-full text-white text-2xl '
           onClick={() => {
-            setOpenProductDetail([false, {}])
+            dispatch({ type: 'INFORMATION_PRODUCT_DETAIL', value: [false, {}] })
           }}
         >
           X

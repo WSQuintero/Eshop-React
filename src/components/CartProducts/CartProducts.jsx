@@ -5,12 +5,8 @@ import { useNavigate } from 'react-router-dom'
 
 function CartProducts () {
   const {
-    isOpenCart,
-    productsAdd,
-    setIsSell,
-    setIsOpenCart,
-    isLoged,
-    setTryBuyWithoutLogIn
+    state: { isOpenCart, productsAdd, isLoged, tryBuyWithoutLogIn },
+    dispatch
   } = useContext(MyContext)
 
   const cartProductsStyle = `fixed top-0 flex flex-col min-h-[450px] max-h-[530px] transition-all duration-2000 rounded-3xl p-7 border-2 border-gray-400 ${
@@ -25,12 +21,12 @@ function CartProducts () {
   const handleClickPay = () => {
     if (isLoged) {
       history('/invoice')
-      setIsSell(false)
-      setIsOpenCart(!isOpenCart)
+      dispatch({ type: 'NO_SELL' })
+      dispatch({ type: 'CH_CART', value: !isOpenCart })
     } else {
       history('/sign-in')
-      setIsOpenCart(!isOpenCart)
-      setTryBuyWithoutLogIn(true)
+      dispatch({ type: 'CH_CART', value: !isOpenCart })
+      dispatch({ type: 'TRY_BUY_WITHOUT_LOGIN', value: !tryBuyWithoutLogIn })
     }
   }
 

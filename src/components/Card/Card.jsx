@@ -5,7 +5,7 @@ import { GrAddCircle } from 'react-icons/gr'
 import { useNavigate } from 'react-router-dom'
 
 function Card ({ Category, title, price, images, description }) {
-  const { dispatch, state } = useContext(MyContext)
+  const { dispatch, state, addOrDeleteProduct } = useContext(MyContext)
 
   const history = useNavigate()
 
@@ -19,11 +19,17 @@ function Card ({ Category, title, price, images, description }) {
   }
 
   const handleClickImage = () => {
-    setOpenProductDetail([
-      true,
-      { Category, title, price, images, description }
-    ])
-    setIsOpenCart(false)
+    dispatch({
+      type: 'INFORMATION_PRODUCT_DETAIL',
+      value: [
+        true,
+        { Category, title, price, images, description }
+      ]
+
+    })
+    dispatch({
+      type: 'CLOSE-CART'
+    })
   }
 
   const handleClickButton = () => {
@@ -32,9 +38,8 @@ function Card ({ Category, title, price, images, description }) {
       title,
       price,
       images,
-      setProductsAdd,
       isInCart,
-      productsAdd,
+      productsAdd: state.productsAdd,
       description
     }
     addOrDeleteProduct(necessaryInformation)

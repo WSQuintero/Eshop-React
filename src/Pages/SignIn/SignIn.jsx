@@ -5,29 +5,23 @@ import { AlertNoSignIn } from '../../components/AlertNoSignIn/AlertNoSignIn'
 
 function SignIn () {
   const {
-    emailValue,
-    setEmailValue,
-    passwordValue,
-    setPasswordValue,
-    users,
-    setIsLoged,
-    tryBuyWithoutLogIn,
-    setTryBuyWithoutLogIn,
-    error,
-    setError,
-    addToSesionStorage,
-    setIsOpenCart
+    state: { emailValue, passwordValue, users, tryBuyWithoutLogIn, error },
+    dispatch,
+    addToSesionStorage
   } = useContext(MyContext)
 
   const history = useNavigate()
   if (error !== '') {
     setTimeout(() => {
-      setError('')
+      dispatch({
+        type: 'THERE_IS_AN_ERROR',
+        value: ''
+      })
     }, 2000)
   }
   if (tryBuyWithoutLogIn) {
     setTimeout(() => {
-      setTryBuyWithoutLogIn(false)
+      dispatch({ type: 'TRY_BUY_WITHOUT_LOGIN', value: false })
     }, 2000)
   }
   const validate = users.find((user) => {
@@ -38,15 +32,21 @@ function SignIn () {
 
     if (validate !== undefined) {
       if (String(validate.password) === String(passwordValue)) {
-        setIsLoged(true)
+        dispatch({ type: 'LOGIN', value: true })
         history('/')
         addToSesionStorage(validate, 'actualUser')
-        setIsOpenCart(false)
+        dispatch({ type: 'CH_CART', value: false })
       } else {
-        setError('La contraseña no es correcta')
+        dispatch({
+          type: 'THERE_IS_AN_ERROR',
+          value: 'La contraseña no es correcta'
+        })
       }
     } else {
-      setError('El usuario no se encuentra registrado')
+      dispatch({
+        type: 'THERE_IS_AN_ERROR',
+        value: 'El usuario no se encuentra registrado'
+      })
     }
   }
 
@@ -62,7 +62,7 @@ function SignIn () {
               name='email'
               value={emailValue}
               onChange={(event) => {
-                setEmailValue(event.target.value)
+                dispatch({ type: 'CH_EMAIL_VALUE', value: event.target.value })
               }}
             />
           </div>
@@ -73,7 +73,7 @@ function SignIn () {
               name='password'
               value={passwordValue}
               onChange={(event) => {
-                setPasswordValue(event.target.value)
+                dispatch({ type: 'CH_PASSWORD_VALUE', value: event.target.value })
               }}
             />
           </div>

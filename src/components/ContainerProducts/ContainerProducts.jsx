@@ -6,7 +6,7 @@ import { MyContext } from '../../GeneralContext/GeneralContext'
 
 function ContainerProducts ({ route, nameCategory, sort }) {
   const { dataProducts } = useCallApi(route, nameCategory, sort)
-  const { openProductDetail } = useContext(MyContext)
+  const { state: { openProductDetail } } = useContext(MyContext)
   const [isCharged, setIsCharged] = useState(false)
 
   const temporal = Array(5).fill('*')

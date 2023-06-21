@@ -2,11 +2,7 @@ import React, { useContext } from 'react'
 import { MyContext } from '../../GeneralContext/GeneralContext'
 
 function CardOrder ({ Category, title, price, images, description }) {
-  const {
-    setOpenProductDetail,
-    setIsOpenCart
-
-  } = useContext(MyContext)
+  const { dispatch } = useContext(MyContext)
 
   const colorsCategory = {
     "men's clothing": 'mensClothing',
@@ -22,11 +18,14 @@ function CardOrder ({ Category, title, price, images, description }) {
         alt=''
         className='z-0 mb-5 w-full h-[200px] rounded-3xl cursor-pointer '
         onClick={() => {
-          setOpenProductDetail([
-            true,
-            { Category, title, price, images, description }
-          ])
-          setIsOpenCart(false)
+          dispatch({
+            type: 'ADD_PRODUCT',
+            value: [
+              true,
+              { Category, title, price, images, description }
+            ]
+          })
+          dispatch({ type: 'CLOSE-CART' })
         }}
       />
       <h2

@@ -3,7 +3,7 @@ import { MyContext } from '../../GeneralContext/GeneralContext'
 import { ContainerOrder } from '../../components/ContainerOrder/ContainerOrder'
 
 function MyOrder () {
-  const { reviewOrder } = useContext(MyContext)
+  const { state: { reviewOrder } } = useContext(MyContext)
   const totalPrice = reviewOrder.order.reduce((a, b) => {
     return a + b.price
   }, 0)

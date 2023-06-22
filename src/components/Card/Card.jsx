@@ -54,7 +54,7 @@ function Card ({ Category, title, price, images, description }) {
   }
 
   return (
-    <article className='relative border border-gray-400 w-60 px-3 py-6 h-70 rounded-3xl bg-white flex-shrink-0'>
+    <article className='relative border border-gray-400 w-60 px-3 py-6 h-70 rounded-3xl bg-white flex-shrink-0 snap-center'>
       <img
         src={images}
         alt=''

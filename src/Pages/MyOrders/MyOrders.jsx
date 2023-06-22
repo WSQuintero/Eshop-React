@@ -1,27 +1,38 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { MyContext } from '../../GeneralContext/GeneralContext'
 import { useNavigate } from 'react-router-dom'
 
 function MyOrders () {
-  const { state: { orders }, addOrDeleteOrders, dispatch } =
-    useContext(MyContext)
+  const {
+    addOrDeleteOrders,
+    dispatch,
+    resOrders,
+    getUserById,
+    orders,
+    setOrders,
+    readUserInSesionStorage
+  } = useContext(MyContext)
+  const history = useNavigate()
+  const actualEmail = readUserInSesionStorage().email
+
   const totalPrice = (order) => {
     return order.reduce((a, b) => {
       return a + b.price
     }, 0)
   }
-  const history = useNavigate()
-  const userOrders =
-    orders.filter(
-      (order) =>
-        order.email === JSON.parse(sessionStorage.getItem('actualUser')).email
-    ) || []
+  useEffect(() => {
+    const setUserOrders = async () => {
+      const ordersByUser = await getUserById(actualEmail)
+      setOrders(ordersByUser)
+    }
+    setUserOrders()
+  }, [resOrders])
 
   return (
     <div className='w-[90%] absolute top-20 flex flex-col gap-6 '>
-      {userOrders.length !== 0
+      {orders.orders && orders.orders?.length !== 0
         ? (
-            userOrders?.map((order, index) => (
+            orders.orders?.map((order, index) => (
           <article
             key={index}
             className='w-[100%] border border-gray-500 cursor-pointer relative'
@@ -33,7 +44,9 @@ function MyOrders () {
             <button
               onClick={(event) => {
                 event.stopPropagation()
-                addOrDeleteOrders(order)
+                addOrDeleteOrders(orders, order)
+                // falta esto
+                console.log(orders.orders)
               }}
               className='w-[30px] h-[30px] flex  hover:bg-red-500 hover:text-white font-bold justify-center items-center p-3 border border-gray-400 absolute -right-5 -top-5 bg-white rounded-full'
             >
@@ -66,7 +79,7 @@ function MyOrders () {
             </ul>
             <p className='flex justify-between border-t border-dotted border-gray-700 p-4'>
               <strong className='ml-2'>Total cancelado </strong>
-              <span className='font-semibold'>${totalPrice(order.order)}</span>
+              <span className='font-semibold'>${totalPrice(order.order).toFixed(2)}</span>
             </p>
           </article>
             ))

@@ -3,7 +3,6 @@ const initialState = {
   productsAdd: JSON.parse(localStorage.getItem('productsAdd')) || [],
   openProductDetail: [false, {}],
   isSell: false,
-  orders: JSON.parse(localStorage.getItem('orders')) || [],
   reviewOrder: '',
   optionSelected: 'asc',
   isOpenBurguerMenu: false,
@@ -15,7 +14,8 @@ const initialState = {
   users: JSON.parse(localStorage.getItem('users')) || [],
   error: '',
   tryBuyWithoutLogIn: false,
-  selectedImage: null
+  selectedImage: null,
+  isUserAdd: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -115,6 +115,13 @@ const reducer = (state = initialState, action) => {
         ...state,
         users: action.value
       }
+
+    case 'IS_USER_ADD':
+      return {
+        ...state,
+        isUserAdd: action.value
+      }
+
     default:
       return state
   }

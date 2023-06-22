@@ -1,61 +1,23 @@
-import React, { useContext, useEffect } from 'react'
-import { MyContext } from '../../GeneralContext/GeneralContext'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { MyContext } from '../../GeneralContext/GeneralContext'
 
 function SignUp () {
-  const {
-    state: {
-      emailValue,
-      passwordValue,
-      nameValue,
-      repeatPasswordValue,
-      users,
-      error
-    },
-    addToLocalStorage,
-    dispatch
-  } = useContext(MyContext)
   const navigate = useNavigate()
 
-  const userExist = users.some((us) => {
-    return us.email === emailValue
-  })
-  function sendForm () {
-    const user = {
-      name: String(nameValue),
-      email: String(emailValue),
-      password: String(passwordValue),
-      repeatPassword: String(repeatPasswordValue)
-    }
+  const {
+    state: { emailValue, passwordValue, nameValue, repeatPasswordValue, error, isUserAdd },
+    validateNewUser,
+    dispatch,
+    addNewUserInFirebase,
+    setOrders
+  } = useContext(MyContext)
 
-    if (
-      user.name !== '' &&
-      user.email !== '' &&
-      user.password !== '' &&
-      user.repeatPassword !== ''
-    ) {
-      if (user.password === user.repeatPassword) {
-        if (userExist) {
-          dispatch({ type: 'THERE_IS_AN_ERROR', value: 'El email ya se encuentra registrado' })
-        } else {
-          if (error === '' || error === undefined) {
-            dispatch({ type: 'ADD_USERS', value: [...users, user] })
-            navigate('/sign-in')
-          }
-        }
-      } else {
-        dispatch({
-          type: 'THERE_IS_AN_ERROR',
-          value: 'Las contraseñas deben coincidir'
-        })
-      }
-    } else {
-      dispatch({
-        type: 'THERE_IS_AN_ERROR',
-        value: 'Por favor diligencia todos los campos'
-      })
-    }
+  const sendForm = () => {
+    validateNewUser()
+    setOrders([])
   }
+
   if (error !== '') {
     setTimeout(() => {
       dispatch({
@@ -64,12 +26,17 @@ function SignUp () {
       })
     }, 2000)
   }
-  useEffect(() => {
-    addToLocalStorage(users, 'users')
-  }, [users])
+
+  if (isUserAdd) {
+    setTimeout(() => {
+      navigate('/sign-in')
+      dispatch({ type: 'IS_USER_ADD', value: false })
+    }, 3000)
+    addNewUserInFirebase()
+  }
 
   return (
-    <div className='w-full h-[100vh] flex flex-col items-center justify-center'>
+    <div className='w-full h-[100vh] flex flex-col items-center justify-center '>
       <div className='p-10 border border-gray-400'>
         <h2 className='mb-10 text-center font-bold'>Create new account</h2>
         <form className='flex flex-col gap-7'>
@@ -124,6 +91,7 @@ function SignUp () {
               value={repeatPasswordValue}
               onChange={(event) => {
                 dispatch({
+                  type: 'CH_REPEAT_PASSWORD_VALUE',
                   value: event.target.value
                 })
               }}
@@ -132,9 +100,7 @@ function SignUp () {
           </div>
           <button
             type='button'
-            onClick={() => {
-              sendForm()
-            }}
+            onClick={sendForm}
             className='border border-gray-400 p-2 rounded-lg hover:bg-green-400 font-semibold hover:text-white'
           >
             Sign Up
@@ -146,6 +112,15 @@ function SignUp () {
           </span>
         )}
       </div>
+      {isUserAdd && (
+        <div className='w-full h-full bg-gray-300/60 absolute grid place-content-center'>
+          <div className='p-10 bg-gray-400 rounded-xl '>
+            <p className='font-bold text-gray-200 text-2xl'>
+              Usuario creado exitosamente
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

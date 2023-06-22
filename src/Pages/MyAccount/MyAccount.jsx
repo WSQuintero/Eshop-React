@@ -1,22 +1,27 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AiFillCamera } from 'react-icons/ai'
 import { IconContext } from 'react-icons'
 import { MyContext } from '../../GeneralContext/GeneralContext'
 
 function MyAccount () {
   let imageInLocalStorage
-  const { state: { selectedImage, setSelectedImage, users }, addToLocalStorage } =
-    useContext(MyContext)
+  const {
+    state: { users },
+    actualUser2,
+    getUserById,
+    setUserInFirebase
+  } = useContext(MyContext)
+  const [selectedImage, setSelectedImage] = useState(
+    ''
+  )
   const actualUser = JSON.parse(sessionStorage.getItem('actualUser')) || {}
   const usersCopied = [...users]
   const userInLocalStorage = users.findIndex((user) => {
     return String(user.email) === String(actualUser.email)
   })
 
-  if (users.length !== 0) {
-    imageInLocalStorage = JSON.parse(localStorage.getItem('users')).find(
-      (user) => user.email === actualUser.email
-    ).image
+  if (actualUser2) {
+    imageInLocalStorage = actualUser2.image
   }
 
   useEffect(() => {
@@ -26,17 +31,25 @@ function MyAccount () {
       const newUser = {
         name: String(actualUser.name),
         email: String(actualUser.email),
-        password: String(actualUser.password),
         image: imageBase64
       }
       usersCopied.splice(userInLocalStorage, 1, newUser)
-      addToLocalStorage(usersCopied, 'users')
+
+      setUserInFirebase(
+        { ...actualUser2, image: imageBase64 },
+        actualUser.email
+      )
+      console.log('yes')
     }
 
-    if (selectedImage) {
+    if (selectedImage !== '') {
       reader.readAsDataURL(selectedImage)
     }
   }, [selectedImage])
+
+  useEffect(() => {
+    getUserById(actualUser.email)
+  }, [])
 
   return (
     <div className='w-full h-[100vh] flex flex-col justify-center items-center'>
@@ -67,7 +80,7 @@ function MyAccount () {
             </IconContext.Provider>
           </label>
         </div>
-        <figcaption className='font-bold'>{actualUser.name}</figcaption>
+        <figcaption className='font-bold'>{actualUser2.name}</figcaption>
       </figure>
       <span>{actualUser.email}</span>
       <input

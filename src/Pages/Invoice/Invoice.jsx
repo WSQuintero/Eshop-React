@@ -1,17 +1,32 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { MyContext } from '../../GeneralContext/GeneralContext'
 import Confetti from 'react-confetti'
 
 function Invoice () {
   const {
-    state: { productsAdd, isSell, orders },
-    addOrDeleteOrders,
-    dispatch
+    state: { productsAdd, isSell },
+    dispatch,
+    setUserInFirebase,
+    getUserById,
+    actualUser2,
+    resOrders
   } = useContext(MyContext)
+  const actualUser = JSON.parse(sessionStorage.getItem('actualUser')) || {}
+  const [finalOrder, setFinalOrder] = useState([])
+
+  useEffect(() => {
+    async function resolveOrders () {
+      const user = await getUserById(actualUser.email)
+      if (user) {
+        setFinalOrder(await user.orders || resOrders)
+      }
+    }
+    resolveOrders()
+  }, [])
 
   const totalPrice = productsAdd.reduce((a, b) => a + b.price, 0)
   const toAdd = [
-    ...orders,
+    ...finalOrder,
     {
       order: [...productsAdd],
       email: JSON.parse(sessionStorage.getItem('actualUser')).email,
@@ -69,7 +84,8 @@ function Invoice () {
               dispatch({ type: 'IS_SELL' })
               dispatch({ type: 'ADD_ORDERS', value: toAdd })
               dispatch({ type: 'ADD_PRODUCT', value: [] })
-              addOrDeleteOrders(toAdd)
+              setUserInFirebase({ ...actualUser2, orders: toAdd }, actualUser2.email)
+              dispatch({ type: 'SET_ORDERS', value: toAdd })
               localStorage.removeItem('productsAdd')
             }}
             className='border border-gray-400 p-4 rounded-xl mt-5 hover:bg-green-400  hover:text-white font-bold'

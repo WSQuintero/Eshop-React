@@ -17,8 +17,7 @@ export default defineConfig(({ command, mode }) => {
         VITE_PROJECT_ID: JSON.stringify(env.VITE_PROJECT_ID),
         VITE_AUTH_DOMAIN: JSON.stringify(env.VITE_AUTH_DOMAIN),
         VITE_API_KEY: JSON.stringify(env.VITE_API_KEY)
-      },
-      base: '/'
+      }
     },
     plugins: [react()] // Agregar el plugin react
   }

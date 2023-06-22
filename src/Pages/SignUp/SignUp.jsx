@@ -1,81 +1,21 @@
-import React, { useContext, useEffect } from 'react'
-import { MyContext } from '../../GeneralContext/GeneralContext'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
-import auth from '../../services/firebaseAuth'
+import { MyContext } from '../../GeneralContext/GeneralContext'
 
 function SignUp () {
-  const {
-    state: {
-      emailValue,
-      passwordValue,
-      nameValue,
-      repeatPasswordValue,
-      users,
-      error
-    },
-    addToLocalStorage,
-    dispatch
-  } = useContext(MyContext)
   const navigate = useNavigate()
 
-  const userExist = users.some((us) => {
-    return us.email === emailValue
-  })
+  const {
+    state: { emailValue, passwordValue, nameValue, repeatPasswordValue, error },
+    validateNewUser,
+    dispatch,
+    isUserAdd,
+    setIsUserAdd,
+    addNewUserInFirebase
+  } = useContext(MyContext)
 
-  async function sendForm () {
-    const user = {
-      name: String(nameValue),
-      email: String(emailValue),
-      password: String(passwordValue),
-      repeatPassword: String(repeatPasswordValue)
-    }
-
-    if (
-      user.name !== '' &&
-      user.email !== '' &&
-      user.password !== '' &&
-      user.repeatPassword !== ''
-    ) {
-      if (user.password === user.repeatPassword) {
-        if (userExist) {
-          dispatch({
-            type: 'THERE_IS_AN_ERROR',
-            value: 'El email ya se encuentra registrado'
-          })
-        } else {
-          try {
-            const newUserCredential = await createUserWithEmailAndPassword(
-              auth,
-              user.email,
-              user.password
-            )
-            const newUser = newUserCredential.user
-            // Aquí puedes realizar acciones adicionales después de crear el usuario en Firebase
-            console.log('Usuario creado:', newUser)
-            dispatch({ type: 'ADD_USERS', value: [...users, user] })
-            navigate('/sign-in')
-          } catch (error) {
-            // Manejo de errores de Firebase Authentication
-            console.log('Error al crear el usuario:', error.message)
-            dispatch({
-              type: 'THERE_IS_AN_ERROR',
-              value: 'Error al crear el usuario'
-            })
-          }
-        }
-      } else {
-        dispatch({
-          type: 'THERE_IS_AN_ERROR',
-          value: 'Las contraseñas deben coincidir'
-        })
-      }
-    } else {
-      dispatch({
-        type: 'THERE_IS_AN_ERROR',
-        value: 'Por favor diligencia todos los campos'
-      })
-    }
+  const sendForm = () => {
+    validateNewUser()
   }
 
   if (error !== '') {
@@ -87,12 +27,16 @@ function SignUp () {
     }, 2000)
   }
 
-  useEffect(() => {
-    addToLocalStorage(users, 'users')
-  }, [users])
+  if (isUserAdd) {
+    setTimeout(() => {
+      navigate('/sign-in')
+      setIsUserAdd(false)
+    }, 3000)
+    addNewUserInFirebase()
+  }
 
   return (
-    <div className='w-full h-[100vh] flex flex-col items-center justify-center'>
+    <div className='w-full h-[100vh] flex flex-col items-center justify-center '>
       <div className='p-10 border border-gray-400'>
         <h2 className='mb-10 text-center font-bold'>Create new account</h2>
         <form className='flex flex-col gap-7'>
@@ -156,9 +100,7 @@ function SignUp () {
           </div>
           <button
             type='button'
-            onClick={() => {
-              sendForm()
-            }}
+            onClick={sendForm}
             className='border border-gray-400 p-2 rounded-lg hover:bg-green-400 font-semibold hover:text-white'
           >
             Sign Up
@@ -170,6 +112,15 @@ function SignUp () {
           </span>
         )}
       </div>
+      {isUserAdd && (
+        <div className='w-full h-full bg-gray-300/60 absolute grid place-content-center'>
+          <div className='p-10 bg-gray-400 rounded-xl '>
+            <p className='font-bold text-gray-200 text-2xl'>
+              Usuario creado exitosamente
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

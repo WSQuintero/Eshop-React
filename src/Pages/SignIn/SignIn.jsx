@@ -1,15 +1,15 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { MyContext } from '../../GeneralContext/GeneralContext'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { AlertNoSignIn } from '../../components/AlertNoSignIn/AlertNoSignIn'
 
 function SignIn () {
   const {
-    state: { emailValue, passwordValue, users, tryBuyWithoutLogIn, error },
+    state: { emailValue, passwordValue, tryBuyWithoutLogIn, error, isLoged },
     dispatch,
-    addToSesionStorage
-  } = useContext(MyContext)
+    validateUserToLogIn
 
+  } = useContext(MyContext)
   const history = useNavigate()
   if (error !== '') {
     setTimeout(() => {
@@ -24,31 +24,16 @@ function SignIn () {
       dispatch({ type: 'TRY_BUY_WITHOUT_LOGIN', value: false })
     }, 2000)
   }
-  const validate = users.find((user) => {
-    return String(user.email) === String(emailValue)
-  })
   const sendForm = (event) => {
     event.preventDefault()
-
-    if (validate !== undefined) {
-      if (String(validate.password) === String(passwordValue)) {
-        dispatch({ type: 'LOGIN', value: true })
-        history('/')
-        addToSesionStorage(validate, 'actualUser')
-        dispatch({ type: 'CH_CART', value: false })
-      } else {
-        dispatch({
-          type: 'THERE_IS_AN_ERROR',
-          value: 'La contraseña no es correcta'
-        })
-      }
-    } else {
-      dispatch({
-        type: 'THERE_IS_AN_ERROR',
-        value: 'El usuario no se encuentra registrado'
-      })
-    }
+    validateUserToLogIn()
   }
+
+  useEffect(() => {
+    if (isLoged) {
+      history('/')
+    }
+  }, [isLoged])
 
   return (
     <div className='w-full h-[100vh] flex flex-col items-center justify-center'>
@@ -63,7 +48,10 @@ function SignIn () {
               name='email'
               value={emailValue}
               onChange={(event) => {
-                dispatch({ type: 'CH_EMAIL_VALUE', value: event.target.value })
+                dispatch({
+                  type: 'CH_EMAIL_VALUE',
+                  value: event.target.value
+                })
               }}
             />
           </div>
@@ -85,7 +73,7 @@ function SignIn () {
           <button
             type='submit'
             className='border border-gray-400 p-2 rounded-lg hover:bg-green-400 font-semibold hover:text-white'
-            disabled={validate === undefined}
+            // disabled={validate === undefined}
           >
             Sign In
           </button>

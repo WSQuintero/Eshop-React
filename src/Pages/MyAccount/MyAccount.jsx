@@ -80,13 +80,9 @@ function MyAccount () {
             </IconContext.Provider>
           </label>
         </div>
-        <figcaption className='font-bold'>{actualUser2.name}</figcaption>
+        <figcaption className='font-bold mt-10'>{actualUser2.name}</figcaption>
       </figure>
       <span>{actualUser.email}</span>
-      <input
-        className='min-h-[100px] p-3'
-        placeholder='Pon tu descripción aquí'
-      ></input>
     </div>
   )
 }

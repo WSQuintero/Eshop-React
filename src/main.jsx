@@ -9,7 +9,7 @@ import './index.css'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <GeneralContext>
     <IconContext.Provider value={{ className: 'w-5 h-5 ' }}>
-      <BrowserRouter>
+      <BrowserRouter basename='/'>
         <App />
       </BrowserRouter>
     </IconContext.Provider>

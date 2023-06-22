@@ -6,16 +6,16 @@ function SignUp () {
   const navigate = useNavigate()
 
   const {
-    state: { emailValue, passwordValue, nameValue, repeatPasswordValue, error },
+    state: { emailValue, passwordValue, nameValue, repeatPasswordValue, error, isUserAdd },
     validateNewUser,
     dispatch,
-    isUserAdd,
-    setIsUserAdd,
-    addNewUserInFirebase
+    addNewUserInFirebase,
+    setOrders
   } = useContext(MyContext)
 
   const sendForm = () => {
     validateNewUser()
+    setOrders([])
   }
 
   if (error !== '') {
@@ -30,7 +30,7 @@ function SignUp () {
   if (isUserAdd) {
     setTimeout(() => {
       navigate('/sign-in')
-      setIsUserAdd(false)
+      dispatch({ type: 'IS_USER_ADD', value: false })
     }, 3000)
     addNewUserInFirebase()
   }

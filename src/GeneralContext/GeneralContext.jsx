@@ -19,7 +19,20 @@ const MyContext = createContext()
 function GeneralContext ({ children }) {
   const firestore = getFirestore(app)
   const [state, dispatch] = useReducer(reducer, initialState)
-  const [isUserAdd, setIsUserAdd] = useState(false)
+  const [resOrders, setResOrders] = useState([])
+  const [actualUser2, setActualUser2] = useState({})
+  const [orders, setOrders] = useState([])
+  const user = {
+    name: String(state.nameValue), // corregir
+    email: String(state.emailValue),
+    password: String(state.passwordValue),
+    repeatPassword: String(state.repeatPasswordValue)
+  }
+
+  const readUserInSesionStorage = () => {
+    const user = JSON.parse(sessionStorage.getItem('actualUser'))
+    return user
+  }
   const addToLocalStorage = (toAdd, nameToAdd) => {
     localStorage.setItem(nameToAdd, JSON.stringify(toAdd))
   }
@@ -56,29 +69,17 @@ function GeneralContext ({ children }) {
       addToLocalStorage(productsInCart, 'productsAdd')
     }
   }
-  const addOrDeleteOrders = (toAdd) => {
-    const orders = JSON.parse(localStorage.getItem('orders')) || []
-    const isInOrders = orders.findIndex((order) => order.time === toAdd.time)
-    if (isInOrders === -1) addToLocalStorage(toAdd, 'orders')
+  const addOrDeleteOrders = (orders, toAdd) => {
+    const isInOrders = orders.orders?.findIndex((order) => order.time === toAdd.time)
+    if (isInOrders === -1) return
     if (isInOrders !== -1) {
-      const duplicatedOrders = [...orders]
+      const duplicatedOrders = [...orders.orders]
       duplicatedOrders.splice(isInOrders, 1)
-      addToLocalStorage(duplicatedOrders, 'orders')
-      dispatch({ type: 'ADD_ORDERS', value: duplicatedOrders })
+      setUserInFirebase({ ...orders, orders: duplicatedOrders }, toAdd.email)
+      setResOrders({ ...orders, orders: duplicatedOrders })
     }
   }
-  const userExist = state.users.some((us) => {
-    return us.email === state.emailValue
-  })
-
-  const user = {
-    name: String(userExist.nameValue), // corregir
-    email: String(state.emailValue),
-    password: String(state.passwordValue),
-    repeatPassword: String(state.repeatPasswordValue)
-  }
-
-  function validateNewUser () {
+  const validateNewUser = () => {
     if (!(user.name && user.email && user.password && user.repeatPassword)) {
       dispatch({
         type: 'THERE_IS_AN_ERROR',
@@ -89,11 +90,6 @@ function GeneralContext ({ children }) {
         type: 'THERE_IS_AN_ERROR',
         value: 'Las contraseñas deben coincidir'
       })
-    } else if (userExist) {
-      dispatch({
-        type: 'THERE_IS_AN_ERROR',
-        value: 'El email ya se encuentra registrado'
-      })
     } else if (user.password.length < 6) {
       dispatch({
         type: 'THERE_IS_AN_ERROR',
@@ -103,14 +99,13 @@ function GeneralContext ({ children }) {
       addUser()
     }
   }
-
-  async function addUser () {
+  const addUser = async () => {
     try {
       // const newUserCredential =
       await createUserWithEmailAndPassword(auth, user.email, user.password)
       // const newUser = newUserCredential.user
       dispatch({ type: 'ADD_USERS', value: [...state.users, user] })
-      setIsUserAdd(true)
+      dispatch({ type: 'IS_USER_ADD', value: true })
     } catch (error) {
       console.log('Error al crear el usuario:', error.message)
       dispatch({
@@ -121,8 +116,7 @@ function GeneralContext ({ children }) {
       })
     }
   }
-
-  async function addNewUserInFirebase () {
+  const addNewUserInFirebase = async () => {
     try {
       const usersRef = collection(firestore, 'usuarios')
       const docId = user.email // ID personalizado del documento
@@ -136,9 +130,7 @@ function GeneralContext ({ children }) {
       })
     }
   }
-
-  // Llamada a la función asincrónica
-  async function validateUserToLogIn () {
+  const validateUserToLogIn = async () => {
     try {
       // const userCredential =
       await signInWithEmailAndPassword(
@@ -163,13 +155,13 @@ function GeneralContext ({ children }) {
       // Realiza las acciones correspondientes al manejo de errores
     }
   }
-
-  async function getUserById (docId) {
+  const getUserById = async (docId) => {
     try {
       const usersRef = collection(firestore, 'usuarios')
       const docSnap = await getDoc(doc(usersRef, docId))
 
       if (docSnap.exists()) {
+        setActualUser2(docSnap.data())
         return docSnap.data()
       } else {
         console.log('El documento no existe')
@@ -179,8 +171,7 @@ function GeneralContext ({ children }) {
       console.error('Error al obtener el documento:', error)
     }
   }
-
-  async function addImageInFireStore (users, nameToAdd, id) {
+  const setUserInFirebase = async (users, id) => {
     try {
       // Actualizar el documento en Firestore
       const usersRef = collection(firestore, 'usuarios')
@@ -193,7 +184,6 @@ function GeneralContext ({ children }) {
       console.error('Error al actualizar los usuarios en Firestore:', error)
     }
   }
-  // Llamada a la función para obtener los datos de un usuario por su ID
 
   return (
     <MyContext.Provider
@@ -204,13 +194,17 @@ function GeneralContext ({ children }) {
         addToSesionStorage,
         dispatch,
         validateNewUser,
-        isUserAdd,
-        setIsUserAdd,
         state,
         validateUserToLogIn,
         addNewUserInFirebase,
+        actualUser2,
+        setUserInFirebase,
         getUserById,
-        addImageInFireStore
+        resOrders,
+        setResOrders,
+        orders,
+        setOrders,
+        readUserInSesionStorage
       }}
     >
       {children}

@@ -13,10 +13,10 @@ function NavBar () {
   } = useContext(MyContext)
 
   const navStyle = isOpenBurguerMenu
-    ? 'flex flex-col w-full h-[100vh]  lg:h-auto lg:flex-row items-center text-lg lg:text-sm '
-    : 'flex w-full justify-between items-center'
+    ? 'flex flex-col w-full h-[100vh]  lg:h-auto lg:flex-row items-center text-lg lg:text-sm gap-10'
+    : 'flex w-full justify-between items-center '
   const containerButtonStyle = isOpenBurguerMenu
-    ? 'flex  lg:flex-row gap-10 px-4 lg:bg-gray-600 bg-white text-gray-600 lg:text-gray-200 lg:w-auto text-4xl lg:text-sm justify-between p-4 mb-10 lg:mb-0 items-center relative w-[100%] top-o'
+    ? 'flex  lg:flex-row gap-10 px-4 lg:bg-[#1c3166] bg-white text-gray-600 lg:text-gray-200 lg:w-auto text-4xl lg:text-sm justify-between p-2 mb-10 lg:mb-0 items-center relative w-[100%] top-o'
     : 'flex w-[90%] justify-between items-center'
   const containerLinks = isOpenBurguerMenu
     ? 'lg:flex lg:flex-row lg:justify-between flex flex-col w-[100%] justify-center gap-5'

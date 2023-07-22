@@ -11,7 +11,7 @@ function App () {
   return (
     <>
       <header
-        className={`w-[100%] border border-gray-600 ${headerStyles} lg:h-[50px] text-sm p-6 flex fixed  lg:items-center z-10 bg-gray-600 text-gray-200 font-bold`}
+        className={`w-[100%] border border-gray-600 ${headerStyles} lg:h-[50px] text-sm p-6 flex fixed  lg:items-center z-10 bg-[#1c3166] text-gray-200 font-bold`}
       >
         <NavBar />
       </header>

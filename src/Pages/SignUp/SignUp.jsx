@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { MyContext } from '../../GeneralContext/GeneralContext'
 
@@ -6,17 +6,38 @@ function SignUp () {
   const navigate = useNavigate()
 
   const {
-    state: { emailValue, passwordValue, nameValue, repeatPasswordValue, error, isUserAdd },
+    state: { error, isUserAdd },
     validateNewUser,
     dispatch,
     addNewUserInFirebase,
     setOrders
   } = useContext(MyContext)
+  const [user, setUser] = useState({})
 
-  const sendForm = () => {
-    validateNewUser()
+  const sendForm = (event) => {
+    event.preventDefault()
+    const elements = event.target.elements
+    const userData = {
+      name: elements.name.value,
+      email: elements.email.value,
+      password: elements.password.value,
+      repeatPassword: elements.repeatPassword.value
+    }
+    validateNewUser(userData)
     setOrders([])
+
+    setUser(userData)
   }
+
+  useEffect(() => {
+    if (isUserAdd) {
+      setTimeout(() => {
+        navigate('/sign-in')
+        dispatch({ type: 'IS_USER_ADD', value: false })
+      }, 3000)
+      addNewUserInFirebase(user)
+    }
+  }, [isUserAdd])
 
   if (error !== '') {
     setTimeout(() => {
@@ -27,29 +48,21 @@ function SignUp () {
     }, 2000)
   }
 
-  if (isUserAdd) {
-    setTimeout(() => {
-      navigate('/sign-in')
-      dispatch({ type: 'IS_USER_ADD', value: false })
-    }, 3000)
-    addNewUserInFirebase()
-  }
-
   return (
     <div className='w-full h-[100vh] flex flex-col items-center justify-center '>
       <div className='p-10 border border-gray-400'>
         <h2 className='mb-10 text-center font-bold'>Create new account</h2>
-        <form className='flex flex-col gap-7'>
+        <form className='flex flex-col gap-7' onSubmit={sendForm}>
           <div className='flex w-full justify-between'>
             <label htmlFor='name'>Nombre:</label>
             <input
               type='text'
               id='name'
               name='name'
-              value={nameValue}
-              onChange={(event) => {
-                dispatch({ type: 'CH_NAME_VALUE', value: event.target.value })
-              }}
+              // value={nameValue}
+              // onChange={(event) => {
+              //   dispatch({ type: 'CH_NAME_VALUE', value: event.target.value })
+              // }}
               required
             />
           </div>
@@ -59,10 +72,10 @@ function SignUp () {
               type='email'
               id='email'
               name='email'
-              value={emailValue}
-              onChange={(event) => {
-                dispatch({ type: 'CH_EMAIL_VALUE', value: event.target.value })
-              }}
+              // value={emailValue}
+              // onChange={(event) => {
+              //   dispatch({ type: 'CH_EMAIL_VALUE', value: event.target.value })
+              // }}
               required
             />
           </div>
@@ -72,13 +85,13 @@ function SignUp () {
               type='password'
               id='password'
               name='password'
-              value={passwordValue}
-              onChange={(event) => {
-                dispatch({
-                  type: 'CH_PASSWORD_VALUE',
-                  value: event.target.value
-                })
-              }}
+              // value={passwordValue}
+              // onChange={(event) => {
+              //   dispatch({
+              //     type: 'CH_PASSWORD_VALUE',
+              //     value: event.target.value
+              //   })
+              // }}
               required
             />
           </div>
@@ -88,19 +101,18 @@ function SignUp () {
               type='password'
               id='repeatPassword'
               name='repeatPassword'
-              value={repeatPasswordValue}
-              onChange={(event) => {
-                dispatch({
-                  type: 'CH_REPEAT_PASSWORD_VALUE',
-                  value: event.target.value
-                })
-              }}
+              // value={repeatPasswordValue}
+              // onChange={(event) => {
+              //   dispatch({
+              //     type: 'CH_REPEAT_PASSWORD_VALUE',
+              //     value: event.target.value
+              //   })
+              // }}
               required
             />
           </div>
           <button
-            type='button'
-            onClick={sendForm}
+            type='submit'
             className='border border-gray-400 p-2 rounded-lg hover:bg-green-400 font-semibold hover:text-white'
           >
             Sign Up

@@ -6,8 +6,8 @@ import { MyContext } from '../../GeneralContext/GeneralContext'
 
 function App () {
   const { state: { isOpenBurguerMenu } } = useContext(MyContext)
-
   const headerStyles = isOpenBurguerMenu ? 'h-[100vh] ' : 'h-[50px] '
+
   return (
     <>
       <header

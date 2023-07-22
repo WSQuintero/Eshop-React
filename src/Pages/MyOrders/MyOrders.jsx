@@ -30,7 +30,7 @@ function MyOrders () {
 
   return (
     <div className='w-[90%] absolute top-20 flex flex-col gap-6 '>
-      {orders.orders && orders.orders?.length !== 0
+      {orders?.orders && orders.orders?.length !== 0
         ? (
             orders.orders?.map((order, index) => (
           <article
@@ -46,7 +46,6 @@ function MyOrders () {
                 event.stopPropagation()
                 addOrDeleteOrders(orders, order)
                 // falta esto
-                console.log(orders.orders)
               }}
               className='w-[30px] h-[30px] flex  hover:bg-red-500 hover:text-white font-bold justify-center items-center p-3 border border-gray-400 absolute -right-5 -top-5 bg-white rounded-full'
             >

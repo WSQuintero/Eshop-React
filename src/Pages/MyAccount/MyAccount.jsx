@@ -39,7 +39,6 @@ function MyAccount () {
         { ...actualUser2, image: imageBase64 },
         actualUser.email
       )
-      console.log('yes')
     }
 
     if (selectedImage !== '') {

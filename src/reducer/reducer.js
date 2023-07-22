@@ -9,8 +9,6 @@ const initialState = {
   isLoged: JSON.parse(sessionStorage.getItem('actualUser')) !== null || false,
   emailValue: '',
   passwordValue: '',
-  nameValue: '',
-  repeatPasswordValue: '',
   users: JSON.parse(localStorage.getItem('users')) || [],
   error: '',
   tryBuyWithoutLogIn: false,
@@ -85,11 +83,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         reviewOrder: action.value
       }
-    case 'CH_NAME_VALUE':
-      return {
-        ...state,
-        nameValue: action.value
-      }
     case 'CH_EMAIL_VALUE':
       return {
         ...state,
@@ -99,11 +92,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         passwordValue: action.value
-      }
-    case 'CH_REPEAT_PASSWORD_VALUE':
-      return {
-        ...state,
-        repeatPasswordValue: action.value
       }
     case 'THERE_IS_AN_ERROR':
       return {

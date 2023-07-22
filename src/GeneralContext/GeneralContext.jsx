@@ -24,9 +24,7 @@ function GeneralContext ({ children }) {
   const [orders, setOrders] = useState([])
   const user = {
     name: String(state.nameValue), // corregir
-    email: String(state.emailValue),
-    password: String(state.passwordValue),
-    repeatPassword: String(state.repeatPasswordValue)
+    email: String(state.emailValue)
   }
 
   const readUserInSesionStorage = () => {
@@ -79,32 +77,36 @@ function GeneralContext ({ children }) {
       setResOrders({ ...orders, orders: duplicatedOrders })
     }
   }
-  const validateNewUser = () => {
-    if (!(user.name && user.email && user.password && user.repeatPassword)) {
+  const validateNewUser = (userCredential) => {
+    if (!(userCredential.name && userCredential.email && userCredential.password && userCredential.repeatPassword)) {
       dispatch({
         type: 'THERE_IS_AN_ERROR',
         value: 'Por favor diligencia todos los campos'
       })
-    } else if (user.password !== user.repeatPassword) {
+    } else if (userCredential.password !== userCredential.repeatPassword) {
       dispatch({
         type: 'THERE_IS_AN_ERROR',
         value: 'Las contraseñas deben coincidir'
       })
-    } else if (user.password.length < 6) {
+    } else if (userCredential.password.length < 6) {
       dispatch({
         type: 'THERE_IS_AN_ERROR',
         value: 'la contraseña debe tener como mínimo 6 caracteres'
       })
     } else {
-      addUser()
+      addUser(userCredential)
     }
   }
-  const addUser = async () => {
+  const addUser = async (userCredential) => {
     try {
       // const newUserCredential =
-      await createUserWithEmailAndPassword(auth, user.email, user.password)
+      await createUserWithEmailAndPassword(
+        auth,
+        userCredential.email,
+        userCredential.password
+      )
       // const newUser = newUserCredential.user
-      dispatch({ type: 'ADD_USERS', value: [...state.users, user] })
+      dispatch({ type: 'ADD_USERS', value: [...state.users, userCredential] })
       dispatch({ type: 'IS_USER_ADD', value: true })
     } catch (error) {
       console.log('Error al crear el usuario:', error.message)
@@ -116,11 +118,14 @@ function GeneralContext ({ children }) {
       })
     }
   }
-  const addNewUserInFirebase = async () => {
+  const addNewUserInFirebase = async (userData) => {
     try {
       const usersRef = collection(firestore, 'usuarios')
-      const docId = user.email // ID personalizado del documento
-      await setDoc(doc(usersRef, docId), { name: user.name, email: user.email })
+      const docId = userData.email // ID personalizado del documento
+      await setDoc(doc(usersRef, docId), {
+        name: userData.name,
+        email: userData.email
+      })
       console.log('Documento creado con ID:', docId)
     } catch (error) {
       console.error('Error al crear el documento:', error)

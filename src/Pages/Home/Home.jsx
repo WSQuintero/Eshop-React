@@ -21,7 +21,7 @@ function Home () {
             onChange={(e) => dispatch({ type: 'ORDER', value: e.target.value })}
             className='font-light bg-[#e6edff] p-2 text-[#1c3166]'
           >
-            <option value='asc' className='font-light bg-[#240047] text-sm '>
+            <option value='asc' className='font-light text-sm '>
               Ascendente
             </option>
             <option value='desc' className='font-light text-sm'>

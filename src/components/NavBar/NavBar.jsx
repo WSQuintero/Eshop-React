@@ -4,37 +4,34 @@ import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { MyContext } from '../../GeneralContext/GeneralContext'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { IconContext } from 'react-icons'
+import './NavBar.css'
 
 function NavBar () {
   const activeStyle = 'underline underline-offset-4'
   const {
-    state: { isOpenCart, isLoged, productsAdd, isOpenBurguerMenu },
-    dispatch
+    state: { isOpenCart, isLoged, productsAdd },
+    dispatch,
+    isOpenBurguerMenu,
+    setIsOpenBurguerMenu
   } = useContext(MyContext)
 
-  const navStyle = isOpenBurguerMenu
-    ? 'flex flex-col w-full h-[100vh]  lg:h-auto lg:flex-row items-center text-lg lg:text-sm gap-10'
-    : 'flex w-full justify-between items-center '
-  const containerButtonStyle = isOpenBurguerMenu
-    ? 'flex  lg:flex-row gap-10 px-4 lg:bg-[#1c3166] bg-white text-gray-600 lg:text-gray-200 lg:w-auto text-4xl lg:text-sm justify-between p-2 mb-10 lg:mb-0 items-center relative w-[100%] top-o'
-    : 'flex w-[90%] justify-between items-center'
-  const containerLinks = isOpenBurguerMenu
-    ? 'lg:flex lg:flex-row lg:justify-between flex flex-col w-[100%] justify-center gap-5'
-    : ''
-  const containerUl = isOpenBurguerMenu
-    ? 'lg:flex lg:flex-row gap-2 flex flex-col items-center text-start mb-10 lg:mb-0'
-    : ''
-  const countProductStyle = `rounded-full w-5 h-5 border bg-gray-200 absolute -bottom-1 left-5 flex justify-center items-center place-content-center text-xl font-bold text-gray-500 text-center pb-1 
+  const countProductStyle = ` countProductStyle
     ${
       isOpenBurguerMenu && window.innerWidth < 1015
         ? 'left-10 bottom-1 absolute w-[30px] h-[30px]'
-        : false
+        : ''
     }`
+
   const handleResize = () => {
-    const windowWidth = window.innerWidth
-    dispatch({ type: 'OPEN_BURGUER_MENU', value: windowWidth >= 1015 })
+    if (window.innerWidth >= 1014) {
+      setIsOpenBurguerMenu(true)
+    }
+    if (window.innerWidth < 1014) {
+      setIsOpenBurguerMenu(false)
+    }
   }
   window.addEventListener('resize', handleResize)
+
   useEffect(() => {
     handleResize()
 
@@ -44,11 +41,19 @@ function NavBar () {
   }, [])
 
   return (
-    <nav className={navStyle}>
-      <div className={containerButtonStyle}>
+    <nav
+      className={isOpenBurguerMenu ? 'navStyleOpenMenu' : 'navStyleCloseMenu'}
+    >
+      <div
+        className={
+          isOpenBurguerMenu
+            ? 'containerButtonStyleOpenMenu'
+            : 'containerButtonStyleCloseMenu'
+        }
+      >
         <span
           onClick={() => {
-            dispatch({ type: 'OPEN_BURGUER_MENU', value: false })
+            setIsOpenBurguerMenu(false)
             handleResize()
           }}
         >
@@ -59,21 +64,21 @@ function NavBar () {
         <button
           className='lg:hidden'
           onClick={() => {
-            dispatch({ type: 'OPEN_BURGUER_MENU', value: !isOpenBurguerMenu })
+            setIsOpenBurguerMenu(!isOpenBurguerMenu)
           }}
         >
           <GiHamburgerMenu />
         </button>
       </div>
-      <div className={containerLinks}>
+      <div className={isOpenBurguerMenu ? 'containerLinksOpenMenu' : ''}>
         {isOpenBurguerMenu && (
           <>
-            <ul className={containerUl}>
+            <ul className={isOpenBurguerMenu ? 'containerUlOpenMenu' : ''}>
               <li>
                 <NavLink
                   onClick={() => {
                     dispatch({ type: 'ASCEND' })
-                    dispatch({ type: 'OPEN_BURGUER_MENU', value: false })
+                    setIsOpenBurguerMenu(false)
                     handleResize()
                   }}
                   to={'/'}
@@ -91,7 +96,7 @@ function NavBar () {
                     isActive ? activeStyle : undefined
                   }
                   onClick={() => {
-                    dispatch({ type: 'OPEN_BURGUER_MENU', value: false })
+                    setIsOpenBurguerMenu(false)
                     handleResize()
                   }}
                 >
@@ -105,7 +110,7 @@ function NavBar () {
                     isActive ? activeStyle : undefined
                   }
                   onClick={() => {
-                    dispatch({ type: 'OPEN_BURGUER_MENU', value: false })
+                    setIsOpenBurguerMenu(false)
                     handleResize()
                   }}
                 >
@@ -119,7 +124,7 @@ function NavBar () {
                     isActive ? activeStyle : undefined
                   }
                   onClick={() => {
-                    dispatch({ type: 'OPEN_BURGUER_MENU', value: false })
+                    setIsOpenBurguerMenu(false)
                     handleResize()
                   }}
                 >
@@ -133,7 +138,7 @@ function NavBar () {
                     isActive ? activeStyle : undefined
                   }
                   onClick={() => {
-                    dispatch({ type: 'OPEN_BURGUER_MENU', value: false })
+                    setIsOpenBurguerMenu(false)
                     handleResize()
                   }}
                 >
@@ -141,10 +146,10 @@ function NavBar () {
                 </NavLink>
               </li>
             </ul>
-            <ul className={containerUl}>
+            <ul className={isOpenBurguerMenu ? 'containerUlOpenMenu' : '' }>
               <li
                 onClick={() => {
-                  dispatch({ type: 'OPEN_BURGUER_MENU', value: false })
+                  setIsOpenBurguerMenu(false)
                   handleResize()
                 }}
               >
@@ -172,7 +177,7 @@ function NavBar () {
                         isActive ? activeStyle : undefined
                       }
                       onClick={() => {
-                        dispatch({ type: 'OPEN_BURGUER_MENU', value: false })
+                        setIsOpenBurguerMenu(false)
                         handleResize()
                       }}
                     >
@@ -186,7 +191,7 @@ function NavBar () {
                         isActive ? activeStyle : undefined
                       }
                       onClick={() => {
-                        dispatch({ type: 'OPEN_BURGUER_MENU', value: false })
+                        setIsOpenBurguerMenu(false)
                         handleResize()
                       }}
                     >
@@ -200,7 +205,7 @@ function NavBar () {
                         isActive ? activeStyle : undefined
                       }
                       onClick={() => {
-                        dispatch({ type: 'OPEN_BURGUER_MENU', value: false })
+                        setIsOpenBurguerMenu(false)
                         handleResize()
                         dispatch({ type: 'LOGIN', value: false })
                         sessionStorage.removeItem('actualUser')
@@ -219,7 +224,7 @@ function NavBar () {
       <button
         onClick={() => {
           dispatch({ type: 'CH_CART', value: !isOpenCart })
-          dispatch({ type: 'OPEN_BURGUER_MENU', value: false })
+          setIsOpenBurguerMenu(false)
           handleResize()
         }}
         className={`relative flex items-center justify-center ml-4 mr-2  ${

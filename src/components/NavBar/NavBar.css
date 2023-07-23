@@ -1,0 +1,25 @@
+.navStyleOpenMenu{
+  @apply flex flex-col w-full h-[100vh]  lg:h-auto lg:flex-row items-center text-lg lg:text-sm gap-10
+}
+.navStyleCloseMenu{
+  @apply flex w-full justify-between items-center 
+}
+
+.containerButtonStyleOpenMenu{
+  @apply flex  lg:flex-row gap-10 px-4 lg:bg-[#1c3166] bg-white text-gray-600 lg:text-gray-200 lg:w-auto text-4xl lg:text-sm justify-between p-2 mb-10 lg:mb-0 items-center relative w-[100%] top-0
+}
+
+.containerButtonStyleCloseMenu{
+  @apply flex w-[90%] justify-between items-center;
+}
+.containerLinksOpenMenu{
+  @apply lg:flex lg:flex-row lg:justify-between flex flex-col w-[100%] justify-center gap-5;
+}
+
+.containerUlOpenMenu{
+  @apply lg:flex lg:flex-row gap-2 flex flex-col items-center text-start mb-10 lg:mb-0;
+}
+
+.countProductStyle {
+  @apply rounded-full w-5 h-5 border bg-gray-200 absolute -bottom-1 left-5 flex justify-center items-center place-content-center text-xl font-bold text-gray-500 text-center pb-1;
+}

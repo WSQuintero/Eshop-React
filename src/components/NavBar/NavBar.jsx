@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { MyContext } from '../../GeneralContext/GeneralContext'
@@ -7,13 +7,13 @@ import { IconContext } from 'react-icons'
 import './NavBar.css'
 
 function NavBar () {
+  const activeStyle = 'underline underline-offset-4'
   const {
     state: { isOpenCart, isLoged, productsAdd },
     dispatch,
     isOpenBurguerMenu,
     setIsOpenBurguerMenu
   } = useContext(MyContext)
-  const [isResize, setIsResize] = useState()
 
   const countProductStyle = ` countProductStyle
     ${
@@ -35,20 +35,10 @@ function NavBar () {
   useEffect(() => {
     handleResize()
 
-    if (window.innerWidth < 1014) {
-      // dispatch({ type: 'OPEN_BURGUER_MENU', value: !isOpenBurguerMenu })
-      setIsResize(false)
+    return () => {
+      window.removeEventListener('resize', handleResize)
     }
-  })
-
-  console.log(isResize)
-  // useEffect(() => {
-  //   handleResize()
-
-  //   return () => {
-  //     window.removeEventListener('resize', handleResize)
-  //   }
-  // }, [isOpenBurguerMenu])
+  }, [])
 
   return (
     <nav
@@ -156,29 +146,25 @@ function NavBar () {
                 </NavLink>
               </li>
             </ul>
-            <ul className={isOpenBurguerMenu ? 'containerUlOpenMenu' : '' }>
+            <ul className={isOpenBurguerMenu ? 'containerUlOpenMenu' : ''}>
               <li
                 onClick={() => {
                   setIsOpenBurguerMenu(false)
                   handleResize()
                 }}
               >
-                {isLoged !== true
-                  ? (
+                {isLoged !== true ? (
                   <NavLink to={'/sign-in'}>Sign in</NavLink>
-                    )
-                  : (
+                ) : (
                   <span>
                     {JSON.parse(sessionStorage.getItem('actualUser')).email}
                   </span>
-                    )}
+                )}
               </li>
 
-              {!isLoged
-                ? (
-                    ''
-                  )
-                : (
+              {!isLoged ? (
+                ''
+              ) : (
                 <>
                   <li>
                     <NavLink
@@ -226,7 +212,7 @@ function NavBar () {
                     </NavLink>
                   </li>
                 </>
-                  )}
+              )}
             </ul>
           </>
         )}

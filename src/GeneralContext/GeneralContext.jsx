@@ -26,6 +26,7 @@ function GeneralContext ({ children }) {
     name: String(state.nameValue), // corregir
     email: String(state.emailValue)
   }
+  const [isOpenBurguerMenu, setIsOpenBurguerMenu] = useState(false)
 
   const readUserInSesionStorage = () => {
     const user = JSON.parse(sessionStorage.getItem('actualUser'))
@@ -209,7 +210,9 @@ function GeneralContext ({ children }) {
         setResOrders,
         orders,
         setOrders,
-        readUserInSesionStorage
+        readUserInSesionStorage,
+        isOpenBurguerMenu,
+        setIsOpenBurguerMenu
       }}
     >
       {children}

@@ -5,7 +5,6 @@ const initialState = {
   isSell: false,
   reviewOrder: '',
   optionSelected: 'asc',
-  isOpenBurguerMenu: false,
   isLoged: JSON.parse(sessionStorage.getItem('actualUser')) !== null || false,
   emailValue: '',
   passwordValue: '',
@@ -68,11 +67,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         optionSelected: action.value
       }
-    case 'OPEN_BURGUER_MENU':
-      return {
-        ...state,
-        isOpenBurguerMenu: action.value
-      }
+
     case 'LOGIN':
       return {
         ...state,

@@ -42,6 +42,7 @@ section div img:hover {
 #mensClothing {
   background-color: rgb(158, 158, 253);
   color: white;
+  
 }
 #mensClothing-opacity {
   background-color: rgb(158, 158, 253, 0.3);

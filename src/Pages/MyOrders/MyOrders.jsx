@@ -29,7 +29,7 @@ function MyOrders () {
   }, [resOrders])
 
   return (
-    <div className='w-[90%] absolute top-20 flex flex-col gap-6 '>
+    <div className='w-[90%] absolute mt-40 flex flex-col gap-6 '>
       {orders?.orders && orders.orders?.length !== 0
         ? (
             orders.orders?.map((order, index) => (

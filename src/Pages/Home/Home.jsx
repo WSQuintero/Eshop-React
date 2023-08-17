@@ -9,17 +9,17 @@ function Home () {
   } = useContext(MyContext)
   return (
     <>
-      <div className='pt-10 border-b border-dotted border-gray-200 relative top-[70px] pb-5'>
+      <div className=' border-b border  border-[#1c3166]/30 relative mt-[90px] flex justify-end  w-full  p-2'>
         <label
           htmlFor='sort'
-          className='w-auto  rounded-md flex gap-10 justify-center border border-gray-300 p-2 font-bold text-xl  bg-[#e4faff]  items-center'
+          className='w-auto  rounded-md flex gap-10 justify-center border border-gray-300 p-1 font-bold text-xl  h-[50px] bg-[#e4faff]  items-center'
         >
           Ordenar: {'  '}
           <select
             name='sort'
             id='sort'
             onChange={(e) => dispatch({ type: 'ORDER', value: e.target.value })}
-            className='font-light bg-[#e6edff] p-2 text-[#1c3166]'
+            className='font-light bg-[#e6edff] text-[#121d38] mix-blend-multiply h-[30px] m-0'
           >
             <option value='asc' className='font-light text-sm '>
               Ascendente

@@ -1,5 +1,5 @@
 .navStyleOpenMenu{
-  @apply flex flex-col w-full h-[100vh]  lg:h-auto lg:flex-row items-center text-lg lg:text-sm gap-10
+  @apply flex flex-col w-full h-[100vh]  bg-[#aae4ff]/10 lg:h-auto lg:flex-row items-center text-lg lg:text-sm gap-10 border border-gray-100 py-1 px-3 shadow-md shadow-blue-300 transition-transform hover:scale-[1.05] duration-200 ease-in-out;
 }
 .navStyleCloseMenu{
   @apply flex w-full justify-between items-center 
@@ -22,4 +22,8 @@
 
 .countProductStyle {
   @apply rounded-full w-5 h-5 border bg-gray-200 absolute -bottom-1 left-5 flex justify-center items-center place-content-center text-xl font-bold text-gray-500 text-center pb-1;
+}
+
+.navStyleOpenMenu ul li {
+  @apply w-auto border border-gray-100/50 px-1 
 }

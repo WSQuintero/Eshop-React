@@ -3,11 +3,13 @@ import { Card } from '../Card/Card'
 import { useCallApi } from '../../customHooks/useCallApi'
 import { ProductDetail } from '../ProductDetail/ProductDetail'
 import { MyContext } from '../../GeneralContext/GeneralContext'
+import { useLocation } from 'react-router-dom'
 
 function ContainerProducts ({ route, nameCategory, sort }) {
   const { dataProducts } = useCallApi(route, nameCategory, sort)
   const { state: { openProductDetail } } = useContext(MyContext)
   const [isCharged, setIsCharged] = useState(false)
+  const location = useLocation()
 
   const temporal = Array(5).fill('*')
   useEffect(() => {
@@ -16,13 +18,12 @@ function ContainerProducts ({ route, nameCategory, sort }) {
 
   return (
     <>
-      {dataProducts.length !== 0
-        ? (
+      {dataProducts.length !== 0 ? (
         <>
           <section
-            className={`flex flex-wrap  justify-around  items-start gap-10  relative  z-0 w-full mt-40 ${
-              openProductDetail[0] ? 'blur-md' : 'blur-none'
-            }`}
+            className={`flex flex-wrap  justify-around  items-start gap-10  relative  z-0 w-full ${
+              location.pathname === '/' ? 'mt-20' : 'mt-40'
+            } ${openProductDetail[0] ? 'blur-md' : 'blur-none'}`}
           >
             {dataProducts?.map((product) => (
               <Card
@@ -38,8 +39,7 @@ function ContainerProducts ({ route, nameCategory, sort }) {
           </section>
           <section>{openProductDetail[0] && <ProductDetail />}</section>
         </>
-          )
-        : (
+      ) : (
         <>
           <section
             className={`flex flex-wrap  justify-around  items-start gap-10  relative  z-0 w-full mt-40 ${
@@ -59,7 +59,7 @@ function ContainerProducts ({ route, nameCategory, sort }) {
             ))}
           </section>
         </>
-          )}
+      )}
     </>
   )
 }

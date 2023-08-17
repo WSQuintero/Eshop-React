@@ -54,11 +54,11 @@ function Card ({ Category, title, price, images, description }) {
   }
 
   return (
-    <article className='relative border border-gray-400 w-60 px-3 py-6 h-70 rounded-3xl bg-white flex-shrink-0 snap-center'>
+    <article className='relative border hover:scale-x-[1.15]   transition-transform duration-300 bg-blue-100 border-gray-400 w-60 px-3 py-6 h-70 rounded-b-3xl flex-shrink-0 snap-center shadow-lg shadow-blue-900'>
       <img
         src={images}
         alt=''
-        className='z-0 mb-5 w-full h-size-img rounded-3xl cursor-pointer'
+        className='z-0 mb-5 w-full h-size-img rounded-3xl cursor-pointer mix-blend-multiply '
         onClick={handleClickImage}
       />
       <button

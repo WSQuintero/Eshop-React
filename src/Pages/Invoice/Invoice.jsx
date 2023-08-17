@@ -44,14 +44,14 @@ function Invoice () {
   ]
 
   return (
-    <div className='flex flex-col items-center justify-center h-[95%]'>
+    <div className='flex flex-col items-center justify-center h-[95vh] w-full'>
       {isSell === false && (
         <>
-          <div className='mt-20 border border-gray-400 p-10 h-[80%] '>
+          <div className='mt-20 border border-gray-400 p-10 min-h-[60%] w-[50%] min-w-[300px] rounded-3xl bg-green-300/10'>
             <h2 className='text-center font-bold border-b border-dotted border-gray-500 p-3'>
               Invoice
             </h2>
-            <ul className='w-[300px] flex flex-col gap-5 mt-10 border-b border-dotted border-gray-500 pb-10'>
+            <ul className='w-full flex flex-col gap-5 mt-10 border-b border-dotted border-gray-500 pb-10'>
               {productsAdd.map((product) => {
                 return (
                   <li
@@ -95,7 +95,7 @@ function Invoice () {
         </>
       )}
       {isSell && (
-        <div className='mt-20 h-[90%] flex flex-col gap-2 items-center '>
+        <div className=' h-[90%] flex flex-col gap-2 items-center '>
           <img
             src='https://i.pinimg.com/originals/7f/cf/a1/7fcfa1896b7b1d59c72742922ba816aa.png'
             width={500}

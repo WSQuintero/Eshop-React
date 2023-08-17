@@ -7,7 +7,7 @@ import { IconContext } from 'react-icons'
 import './NavBar.css'
 
 function NavBar () {
-  const activeStyle = 'underline underline-offset-4'
+  const activeStyle = 'underline underline-offset-4 '
   const {
     state: { isOpenCart, isLoged, productsAdd },
     dispatch,
@@ -42,12 +42,14 @@ function NavBar () {
 
   return (
     <nav
-      className={isOpenBurguerMenu ? 'navStyleOpenMenu' : 'navStyleCloseMenu'}
+      className={
+        isOpenBurguerMenu ? 'navStyleOpenMenu ' : 'navStyleCloseMenu h-full'
+      }
     >
       <div
         className={
           isOpenBurguerMenu
-            ? 'containerButtonStyleOpenMenu'
+            ? 'containerButtonStyleOpenMenu '
             : 'containerButtonStyleCloseMenu'
         }
       >
@@ -70,11 +72,21 @@ function NavBar () {
           <GiHamburgerMenu />
         </button>
       </div>
-      <div className={isOpenBurguerMenu ? 'containerLinksOpenMenu' : ''}>
+      <div
+        className={
+          isOpenBurguerMenu ? 'containerLinksOpenMenu h-full' : 'h-full'
+        }
+      >
         {isOpenBurguerMenu && (
           <>
-            <ul className={isOpenBurguerMenu ? 'containerUlOpenMenu' : ''}>
-              <li>
+            <ul
+              className={
+                isOpenBurguerMenu
+                  ? 'containerUlOpenMenu relative h-full'
+                  : 'h-full'
+              }
+            >
+              <li >
                 <NavLink
                   onClick={() => {
                     dispatch({ type: 'ASCEND' })
@@ -83,7 +95,7 @@ function NavBar () {
                   }}
                   to={'/'}
                   className={({ isActive }) =>
-                    isActive ? activeStyle : undefined
+                    isActive ? activeStyle : 'h-full'
                   }
                 >
                   All

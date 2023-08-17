@@ -9,7 +9,7 @@ function ContainerOrder ({ dataProducts }) {
   return (
     <>
       <section
-        className={`flex h-[320px] items-center w-auto justify-start px-10 gap-10  relative  mt-10 z-0 overflow-x-auto snap-x ${
+        className={`flex h-auto pt-10 items-center w-auto justify-start px-10 gap-10  relative  mt-10 z-0 overflow-x-auto snap-proximity scroll-smooth${
           openProductDetail[0] ? 'blur-md' : 'blur-none'
         }`}
       >
